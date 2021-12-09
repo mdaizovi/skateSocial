@@ -9,7 +9,10 @@ import React from 'react';
 // remember this is the only tutorial that works for you: https://blog.devgenius.io/react-native-state-management-with-context-api-61f63f5b099
 
 export default React.createContext({
-  tasks: [],
-  addNewTask : (task) => {},
-  deleteTask : (taskId) => {}
+//   user: [],
+//   addNewTask : (task) => {},
+//   deleteTask : (taskId) => {}
+user:{},
+userLogIn : (email, pw) => {},
+userLogOut : () => {}
 });

@@ -5,8 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import authApi from './app/api/auth';
 import {appUserContext} from './app/context/appUserContext';
 
-import TaskList from './app/components/taskList'
-import Footer from './app/components/footer';
+import LoginScreen from './app/screens/loginScreen'
 import GlobalState from './app/context/globalState';
 
 export default class App extends React.Component{
@@ -14,8 +13,7 @@ export default class App extends React.Component{
   return(
    <GlobalState>
     <View style={styles.container}>
-      <Footer/>
-     <TaskList />
+     <LoginScreen />
     </View>
    </GlobalState>
   );

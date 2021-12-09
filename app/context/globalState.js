@@ -3,24 +3,25 @@ import appUserContext from './appUserContext';
 
 export default class GlobalState extends React.Component{
     state = {
-    tasks: [],
+    user: {},
     }
  
-addNewTask = (task) => {
-  const list = [...this.state.tasks, task];
-  this.setState({tasks: list});
+userLogIn = (email, pw) => {
+  console.log("logging in "+ email)
+  const user = {'email':email, "pw":pw}
+  this.setState({user :user});
 };
  
-deleteTask = (taskId) => {
-  this.setState(this.state.tasks.splice(taskId,1));
+userLogOut = (taskId) => {
+  this.setState({user: {}});
 };
 render(){
  return (
   <appUserContext.Provider 
    value={{
-    tasks: this.state.tasks,
-    addNewTask: this.addNewTask,
-    deleteTask: this.deleteTask
+    user: this.state.user,
+    userLogIn: this.userLogIn,
+    userLogOut: this.userLogOut
    }}
   >
    {this.props.children}
