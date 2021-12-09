@@ -14,8 +14,8 @@ export default class App extends React.Component{
   return(
    <GlobalState>
     <View style={styles.container}>
+      <Footer/>
      <TaskList />
-     <Footer/>
     </View>
    </GlobalState>
   );

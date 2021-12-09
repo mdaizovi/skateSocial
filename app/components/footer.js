@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
  view: {
   flex: 1,
   width: '100%',
-  bottom: 20,
+  top: 0,
   position: 'absolute',
   flexDirection: 'row'
  },
