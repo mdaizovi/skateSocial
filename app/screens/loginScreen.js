@@ -14,20 +14,29 @@ export default function LoginScreen() {
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="email"
+          keyboardType="email-adress"
+          onChangeText={(email) => setEmail(email)}
           placeholder="Email"
           placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+          style={styles.TextInput}
+          textContentType="emailAddress" // only works on ios
         />
       </View>
  
       <View style={styles.inputView}>
         <TextInput
-          style={styles.TextInput}
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="lock"
+          onChangeText={(password) => setPassword(password)}
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          style={styles.TextInput}
+          textContentType="password" // only works on ios
         />
       </View>
 
@@ -36,7 +45,9 @@ export default function LoginScreen() {
       </TouchableOpacity>
 
 
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity style={styles.loginBtn}
+        onPress={()=> console.log(email, " ",password)}
+      >
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
 
