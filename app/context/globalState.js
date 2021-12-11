@@ -1,5 +1,5 @@
 import React from 'react';
-import appUserContext from './appUserContext';
+import AppUserContext from './AppUserContext';
 
 export default class GlobalState extends React.Component{
     state = {
@@ -17,7 +17,7 @@ userLogOut = (taskId) => {
 };
 render(){
  return (
-  <appUserContext.Provider 
+  <AppUserContext.Provider 
    value={{
     user: this.state.user,
     userLogIn: this.userLogIn,
@@ -25,7 +25,7 @@ render(){
    }}
   >
    {this.props.children}
-  </appUserContext.Provider>
+  </AppUserContext.Provider>
  );
  }
 }

@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import { View, StyleSheet, FlatList, Text, TextInput, Button, Image, TouchableOpacity,} from 'react-native';
-import appUserContext from '../context/appUserContext';
-import ErrorMessageText from '../components/errorMessage';
+//import AppUserContext from '../context/AppUserContext';
+import AppErrorMessageText from '../components/AppErrorMessageText';
 import { StatusBar } from "expo-status-bar";
 import {Formik} from 'formik'
 import * as Yup from 'yup';
@@ -42,7 +42,7 @@ export default function LoginScreen() {
         />
       </View>
 
-      <ErrorMessageText error={errors.email} visible={touched.email}/>
+      <AppErrorMessageText error={errors.email} visible={touched.email}/>
  
       <View style={styles.inputView}>
         <TextInput
@@ -58,7 +58,7 @@ export default function LoginScreen() {
           textContentType="password" // only works on ios
         />
       </View>
-      <ErrorMessageText error={errors.password} visible={touched.password}/>
+      <AppErrorMessageText error={errors.password} visible={touched.password}/>
 
       <TouchableOpacity>
         <Text style={styles.link_button}>Forgot Password?</Text>

@@ -3,10 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 
 import authApi from './app/api/auth';
-import {appUserContext} from './app/context/appUserContext';
+import {AppUserContext} from './app/context/AppUserContext';
 
-import LoginScreen from './app/screens/loginScreen'
-import GlobalState from './app/context/globalState';
+import LoginScreen from './app/screens/LoginScreen'
+import GlobalState from './app/context/GlobalState';
 
 export default class App extends React.Component{
  render(){

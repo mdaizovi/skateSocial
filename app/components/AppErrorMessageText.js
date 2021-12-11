@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 
-export default function ErrorMessageText({error, visible}) {
+export default function AppErrorMessageText({error, visible}) {
     if (!visible || !error) return null;
    
     return (
