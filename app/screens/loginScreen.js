@@ -1,11 +1,10 @@
 import React, {Component, useState} from 'react';
 import { View, StyleSheet, FlatList, Text, TextInput, Button, Image, TouchableOpacity,} from 'react-native';
 //import AppUserContext from '../context/AppUserContext';
-import AppErrorMessageText from '../components/AppErrorMessageText';
-import AppFormField from '../components/AppFormField';
-import AppSubmitButton from '../components/AppSubmitButton';
+import AppForm from '../components/forms/AppForm';
+import AppFormField from '../components/forms/AppFormField';
+import AppSubmitButton from '../components/forms/AppSubmitButton';
 import { StatusBar } from "expo-status-bar";
-import {Formik} from 'formik'
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
@@ -22,13 +21,11 @@ export default function LoginScreen() {
  
       <StatusBar style="auto" />
 
-    <Formik
+    <AppForm
       initialValues = {{email:'', password:''}}
       onSubmit={values => console.log(values)}
       validationSchema = {validationSchema}
       >
-        { ({handleSubmit}) => (
-          <>
       <View style={styles.inputView}>
         <AppFormField
           autoCapitalize="none"
@@ -69,9 +66,7 @@ export default function LoginScreen() {
         <Text style={styles.linkButton}>Register</Text>
       </TouchableOpacity>
 
-          </>
-          )}
-          </Formik>
+          </AppForm>
     </View>
   );
 }

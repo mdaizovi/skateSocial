@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, FlatList, Text, TextInput, Button, Image, TouchableOpacity,} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity,} from 'react-native';
 import {useFormikContext} from 'formik'
 
 export default function AppSubmitButton({title}) {
