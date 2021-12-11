@@ -1,9 +1,6 @@
 import React, {Component, useState} from 'react';
-import { View, StyleSheet, FlatList, Text, TextInput, Button, Image, TouchableOpacity,} from 'react-native';
-//import AppUserContext from '../context/AppUserContext';
-import AppForm from '../components/forms/AppForm';
-import AppFormField from '../components/forms/AppFormField';
-import AppSubmitButton from '../components/forms/AppSubmitButton';
+import { View, StyleSheet, Text, Image, TouchableOpacity,} from 'react-native';
+import {AppForm, AppFormField, AppSubmitButton } from '../components/forms/';
 import { StatusBar } from "expo-status-bar";
 import * as Yup from 'yup';
 
