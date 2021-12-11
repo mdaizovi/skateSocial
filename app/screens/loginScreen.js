@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import { View, StyleSheet, FlatList, Text, TextInput, Button, Image, TouchableOpacity,} from 'react-native';
 import appUserContext from '../context/appUserContext';
+import ErrorMessageText from '../components/errorMessage';
 import { StatusBar } from "expo-status-bar";
 import {Formik} from 'formik'
 import * as Yup from 'yup';
@@ -24,28 +25,31 @@ export default function LoginScreen() {
       onSubmit={values => console.log(values)}
       validationSchema = {validationSchema}
       >
-        { ({ handleChange, handleSubmit, errors}) => (
+        { ({ handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
           <>
       <View style={styles.inputView}>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
-          keyboardType="email-adress"
+          keyboardType="email-address"
+          onBlur={() => setFieldTouched("email")}
           onChangeText={handleChange("email")}
           placeholder="Email"
           placeholderTextColor="#003f5c"
           style={styles.TextInput}
           textContentType="emailAddress" // only works on ios
         />
-        <Text style = {{color: 'red'}}>{errors.email}</Text>
       </View>
+
+      <ErrorMessageText error={errors.email} visible={touched.email}/>
  
       <View style={styles.inputView}>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
+          onBlur={() => setFieldTouched("password")}
           onChangeText={handleChange("password")}
           placeholder="Password"
           placeholderTextColor="#003f5c"
@@ -53,8 +57,8 @@ export default function LoginScreen() {
           style={styles.TextInput}
           textContentType="password" // only works on ios
         />
-        <Text style = {{color: 'red'}}>{errors.password}</Text>
       </View>
+      <ErrorMessageText error={errors.password} visible={touched.password}/>
 
       <TouchableOpacity>
         <Text style={styles.link_button}>Forgot Password?</Text>
