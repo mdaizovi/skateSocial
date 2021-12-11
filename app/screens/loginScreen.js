@@ -2,28 +2,43 @@ import React, {Component, useState} from 'react';
 import { View, StyleSheet, FlatList, Text, TextInput, Button, Image, TouchableOpacity,} from 'react-native';
 import appUserContext from '../context/appUserContext';
 import { StatusBar } from "expo-status-bar";
+import {Formik} from 'formik'
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+  password: Yup.string().required().min(8).label("Password"),
+}
+)
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
  
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require("../assets/icon.png")} />
  
       <StatusBar style="auto" />
+
+    <Formik
+      initialValues = {{email:'', password:''}}
+      onSubmit={values => console.log(values)}
+      validationSchema = {validationSchema}
+      >
+        { ({ handleChange, handleSubmit, errors}) => (
+          <>
       <View style={styles.inputView}>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
           keyboardType="email-adress"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={handleChange("email")}
           placeholder="Email"
           placeholderTextColor="#003f5c"
           style={styles.TextInput}
           textContentType="emailAddress" // only works on ios
         />
+        <Text style = {{color: 'red'}}>{errors.email}</Text>
       </View>
  
       <View style={styles.inputView}>
@@ -31,13 +46,14 @@ export default function LoginScreen() {
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={handleChange("password")}
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
           style={styles.TextInput}
           textContentType="password" // only works on ios
         />
+        <Text style = {{color: 'red'}}>{errors.password}</Text>
       </View>
 
       <TouchableOpacity>
@@ -46,7 +62,7 @@ export default function LoginScreen() {
 
 
       <TouchableOpacity style={styles.loginBtn}
-        onPress={()=> console.log(email, " ",password)}
+        onPress={handleSubmit}
       >
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
@@ -54,6 +70,10 @@ export default function LoginScreen() {
       <TouchableOpacity>
         <Text style={styles.link_button}>Register</Text>
       </TouchableOpacity>
+
+          </>
+          )}
+          </Formik>
     </View>
   );
 }
