@@ -11,14 +11,15 @@ const validationSchema = Yup.object().shape({
 })
 
 export default function LoginScreen(props) {
+  const [results, setResults] = useState([]);
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ email, password}) => {
     const result = await AuthApi.login(email, password);
     if (!result.ok) setLoginFailed(true);
     setLoginFailed(false);
-    setResults(result.data.key);
-    const key = result.data.key;
+    setResults(result.data.tokens.access);
+    const key = result.data.tokens.access;
     console.log(key);
   }
   
