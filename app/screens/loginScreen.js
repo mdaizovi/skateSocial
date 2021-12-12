@@ -1,5 +1,6 @@
 import React, {Component, useState} from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity,} from 'react-native';
+import AuthApi from '../api/auth';
 import {AppForm, AppFormField, AppSubmitButton } from '../components/forms/';
 import { StatusBar } from "expo-status-bar";
 import * as Yup from 'yup';
@@ -7,11 +8,21 @@ import * as Yup from 'yup';
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(8).label("Password"),
-}
-)
+})
 
-export default function LoginScreen() {
- 
+export default function LoginScreen(props) {
+  const [loginFailed, setLoginFailed] = useState(false);
+
+  const handleSubmit = async ({ email, password}) => {
+    const result = await AuthApi.login(email, password);
+    if (!result.ok) setLoginFailed(true);
+    setLoginFailed(false);
+    setResults(result.data.key);
+    const key = result.data.key;
+    console.log(key);
+  }
+  
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require("../assets/icon.png")} />
@@ -20,7 +31,7 @@ export default function LoginScreen() {
 
     <AppForm
       initialValues = {{email:'', password:''}}
-      onSubmit={values => console.log(values)}
+      onSubmit={handleSubmit}
       validationSchema = {validationSchema}
       >
       <View style={styles.inputView}>
