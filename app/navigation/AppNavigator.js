@@ -4,14 +4,20 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import AccountNavigator from "./AccountNavigator";
 import FeedNavigator from "./FeedNavigator";
-import ListingEditScreen from "../screens/ListingEditScreen";
+import SearchLocalScreen from "../screens/SearchLocalScreen";
 import NewListingButton from "./NewListingButton";
 import routes from "./routes";
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
-  <Tab.Navigator>
+  <Tab.Navigator 
+  // ugly, i just want to see it change for now
+  tabBarOptions={{
+    activeBackgroundColor:"black",
+    activeTintColor: '#81B247',
+  }}
+  >
     <Tab.Screen
       name="Feed"
       component={FeedNavigator}
@@ -22,25 +28,20 @@ const AppNavigator = () => (
       }}
     />
     <Tab.Screen
-      name="ListingEdit"
-      component={ListingEditScreen}
-      options={({ navigation }) => ({
-        tabBarButton: () => (
-          <NewListingButton
-            onPress={() => navigation.navigate(routes.LISTING_EDIT)}
-          />
-        ),
+      name="Search"
+      component={SearchLocalScreen}
+      options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons
-            name="plus-circle"
+            name="map-marker-question"
             color={color}
             size={size}
           />
-        ),
-      })}
+      ),
+    }}
     />
     <Tab.Screen
-      name="Account"
+      name="Me"
       component={AccountNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (

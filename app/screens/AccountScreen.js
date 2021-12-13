@@ -9,7 +9,28 @@ import Screen from "../components/Screen";
 
 const menuItems = [
   {
-    title: "My Listings",
+    title: "My Events/Posts",
+    icon: {
+      name: "format-list-bulleted",
+      backgroundColor: colors.primary,
+    },
+  },
+  {
+    title: "My Tricks",
+    icon: {
+      name: "format-list-bulleted",
+      backgroundColor: colors.primary,
+    },
+  },
+  {
+    title: "My Videos",
+    icon: {
+      name: "format-list-bulleted",
+      backgroundColor: colors.primary,
+    },
+  },
+  {
+    title: "My Spots (bookmarked? added?)",
     icon: {
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
