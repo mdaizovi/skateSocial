@@ -11,5 +11,10 @@ export default {
     blue: "#0000ff",
     purple: "#550088",
     inactive:"#000000",
-    active:"#FFFFFF"
+    active:"#FFFFFF",
+    
+    medium: "#6e6969",
+    light: "#f8f4f4",
+    dark: "#0c0c0c",
+    danger: "#ff5252",
 };
