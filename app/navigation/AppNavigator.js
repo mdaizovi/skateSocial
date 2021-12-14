@@ -5,7 +5,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AccountNavigator from "./AccountNavigator";
 import FeedNavigator from "./FeedNavigator";
 import SearchLocalScreen from "../screens/SearchLocalScreen";
-import NewListingButton from "./NewListingButton";
 import routes from "./routes";
 
 const Tab = createBottomTabNavigator();

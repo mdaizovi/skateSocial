@@ -1,116 +1,81 @@
-import React, {Component, useState} from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity,} from 'react-native';
-import AuthApi from '../api/auth';
-import {AppForm, AppFormField, AppSubmitButton } from '../components/forms/';
-import { StatusBar } from "expo-status-bar";
-import * as Yup from 'yup';
+import React, { useState } from "react";
+import { StyleSheet, Image } from "react-native";
+import * as Yup from "yup";
+
+import Screen from "../components/Screen";
+import {
+  ErrorMessage,
+  Form,
+  FormField,
+  SubmitButton,
+} from "../components/forms";
+import authApi from "../api/auth";
+import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(8).label("Password"),
-})
+  password: Yup.string().required().min(4).label("Password"),
+});
 
-export default function LoginScreen(props) {
-  const [results, setResults] = useState([]);
+function LoginScreen(props) {
+  const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
 
-  const handleSubmit = async ({ email, password}) => {
-    const result = await AuthApi.login(email, password);
-    if (!result.ok) setLoginFailed(true);
+  const handleSubmit = async ({ email, password }) => {
+    const result = await authApi.login(email, password);
+    if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
-    setResults(result.data.tokens.access);
-    const key = result.data.tokens.access;
-    console.log(key);
-  }
-  
+    auth.logIn(result.data);
+  };
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={require("../assets/icon.png")} />
- 
-      <StatusBar style="auto" />
+    <Screen style={styles.container}>
+      <Image style={styles.logo} source={require("../assets/logo.png")} />
 
-    <AppForm
-      initialValues = {{email:'', password:''}}
-      onSubmit={handleSubmit}
-      validationSchema = {validationSchema}
+      <Form
+        initialValues={{ email: "", password: "" }}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
       >
-      <View style={styles.inputView}>
-        <AppFormField
+        <ErrorMessage
+          error="Invalid email and/or password."
+          visible={loginFailed}
+        />
+        <FormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
           keyboardType="email-address"
           name="email"
           placeholder="Email"
-          placeholderTextColor="#003f5c"
-          style={styles.TextInput}
-          textContentType="emailAddress" // only works on ios
+          textContentType="emailAddress"
         />
-      </View>
- 
-      <View style={styles.inputView}>
-        <AppFormField
+        <FormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
           name="password"
           placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          style={styles.TextInput}
-          textContentType="password" // only works on ios
+          secureTextEntry
+          textContentType="password"
         />
-      </View>
-
-      <TouchableOpacity>
-        <Text style={styles.link_button}>Forgot Password?</Text>
-      </TouchableOpacity>
-
-
-      <AppSubmitButton
-      title="LOGIN"
-      />
-      <TouchableOpacity>
-        <Text style={styles.linkButton}>Register</Text>
-      </TouchableOpacity>
-
-          </AppForm>
-    </View>
+        <SubmitButton title="Login" />
+      </Form>
+    </Screen>
   );
 }
- 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
- 
-  image: {
-    marginBottom: 40,
-  },
- 
-  inputView: {
-    backgroundColor: "#FFC0CB",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
-    marginBottom: 20,
- 
-    alignItems: "center",
-  },
- 
-  TextInput: {
-    height: 50,
-    flex: 1,
     padding: 10,
-    marginLeft: 20,
   },
- 
-  linkButton: {
-    height: 30,
-    marginBottom: 30,
+  logo: {
+    width: 80,
+    height: 80,
+    alignSelf: "center",
+    marginTop: 50,
+    marginBottom: 20,
   },
 });
+
+export default LoginScreen;
