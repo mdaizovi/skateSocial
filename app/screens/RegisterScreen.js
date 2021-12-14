@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import React, { useState} from "react";
+import { StyleSheet,  Text } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
@@ -7,10 +7,10 @@ import usersApi from "../api/users";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
 import {
-  ErrorMessage,
-  Form,
-  FormField,
-  SubmitButton,
+  AppErrorMessageText,
+  AppForm,
+  AppFormField,
+  AppSubmitButton,
 } from "../components/forms";
 import useApi from "../hooks/useApi";
 import ActivityIndicator from "../components/ActivityIndicator";
@@ -50,19 +50,19 @@ function RegisterScreen() {
     <>
       <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
       <Screen style={styles.container}>
-        <Form
+        <AppForm
           initialValues={{ name: "", email: "", password: "" }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <ErrorMessage error={error} visible={error} />
-          <FormField
+          <AppErrorMessageText error={error} visible={error} />
+          <AppFormField
             autoCorrect={false}
             icon="account"
             name="name"
             placeholder="Name"
           />
-          <FormField
+          <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
             icon="email"
@@ -71,7 +71,7 @@ function RegisterScreen() {
             placeholder="Email"
             textContentType="emailAddress"
           />
-          <FormField
+          <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
             icon="lock"
@@ -80,8 +80,8 @@ function RegisterScreen() {
             secureTextEntry
             textContentType="password"
           />
-          <SubmitButton title="Register" />
-        </Form>
+          <AppSubmitButton title="Register" />
+        </AppForm> 
       </Screen>
     </>
   );

@@ -4,10 +4,10 @@ import * as Yup from "yup";
 
 import Screen from "../components/Screen";
 import {
-  ErrorMessage,
-  Form,
-  FormField,
-  SubmitButton,
+  AppErrorMessageText,
+  AppForm,
+  AppFormField,
+  AppSubmitButton,
 } from "../components/forms";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
@@ -32,16 +32,16 @@ function LoginScreen(props) {
     <Screen style={styles.container}>
       <Image style={styles.logo} source={require("../assets/logo.png")} />
 
-      <Form
+      <AppForm
         initialValues={{ email: "", password: "" }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <ErrorMessage
+        <AppErrorMessageText
           error="Invalid email and/or password."
           visible={loginFailed}
         />
-        <FormField
+        <AppFormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="email"
@@ -50,7 +50,7 @@ function LoginScreen(props) {
           placeholder="Email"
           textContentType="emailAddress"
         />
-        <FormField
+        <AppFormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
@@ -59,8 +59,8 @@ function LoginScreen(props) {
           secureTextEntry
           textContentType="password"
         />
-        <SubmitButton title="Login" />
-      </Form>
+        <AppSubmitButton title="Login" />
+      </AppForm>
     </Screen>
   );
 }
