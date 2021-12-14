@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
@@ -14,7 +14,7 @@ import useAuth from "../auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  password: Yup.string().required().min(8).label("Password"),
 });
 
 function LoginScreen(props) {
@@ -48,6 +48,7 @@ function LoginScreen(props) {
           keyboardType="email-address"
           name="email"
           placeholder="Email"
+          style={styles.TextInput}
           textContentType="emailAddress"
         />
         <AppFormField
@@ -57,10 +58,16 @@ function LoginScreen(props) {
           name="password"
           placeholder="Password"
           secureTextEntry
+          style={styles.TextInput}
           textContentType="password"
         />
         <AppSubmitButton title="Login" />
       </AppForm>
+
+      <TouchableOpacity>
+        <Text style={styles.link_button}>Forgot Password?</Text>
+      </TouchableOpacity>
+
     </Screen>
   );
 }
@@ -68,6 +75,10 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    flex: 1,
+    //backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   logo: {
     width: 80,
@@ -75,6 +86,29 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 50,
     marginBottom: 20,
+  },
+  image: {
+    marginBottom: 40,
+  },
+  inputView: {
+    backgroundColor: "#FFC0CB",
+    borderRadius: 30,
+    width: "70%",
+    height: 45,
+    marginBottom: 20,
+ 
+    alignItems: "center",
+  },
+  TextInput: {
+    height: 50,
+    flex: 1,
+    padding: 10,
+    marginLeft: 20,
+  },
+ 
+  linkButton: {
+    height: 30,
+    marginBottom: 30,
   },
 });
 

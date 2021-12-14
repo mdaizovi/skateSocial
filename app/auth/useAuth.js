@@ -6,16 +6,16 @@ import authStorage from "./storage";
 export default useAuth = () => {
   const { user, setUser } = useContext(AuthContext);
 
-  const logIn = () => {
-    // TODO api log in
-    const user = {"first_name":"Mic", "email":"mdaizovi@gmail.com", "username":"MickeyD"}
-    const authToken = "token"
+  const logIn = (data) => {
+    //const user = {"first_name":"Mic", "email":"mdaizovi@gmail.com", "username":"MickeyD"}
+    // TODO handle access/refresh?
+    const authToken = data.tokens.access
+    const user = data.user
     setUser(user);
     authStorage.storeToken(authToken);
   };
 
   const logOut = () => {
-    console.log("logging out")
     // is there any benefit to logging out via api? prob not?
     setUser(null);
     authStorage.removeToken();
