@@ -3,8 +3,7 @@ import { StyleSheet,  Text } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
-import usersApi from "../api/users";
-import authApi from "../api/auth";
+import registerApi from "../api/registration";
 import useAuth from "../auth/useAuth";
 import {
   AppErrorMessageText,
@@ -12,56 +11,43 @@ import {
   AppFormField,
   AppSubmitButton,
 } from "../components/forms";
-import useApi from "../hooks/useApi";
 import ActivityIndicator from "../components/ActivityIndicator";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label("Name"),
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
+  password1: Yup.string().required().min(8).label("Password"),
+  password2: Yup.string().required().min(8).label("Password (again)"),
 });
 
 function RegisterScreen() {
-  const registerApi = useApi(usersApi.register);
-  const loginApi = useApi(authApi.login);
   const auth = useAuth();
+  const [loginFailed, setLoginFailed] = useState(false);
   const [error, setError] = useState();
 
   const handleSubmit = async (userInfo) => {
-    const result = await registerApi.request(userInfo);
+    const result = await registerApi.register(userInfo);
 
     if (!result.ok) {
       if (result.data) setError(result.data.error);
       else {
         setError("An unexpected error occurred.");
-        console.log(result);
       }
-      return;
+      return setLoginFailed(true);
     }
-
-    const { data: authToken } = await loginApi.request(
-      userInfo.email,
-      userInfo.password
-    );
-    auth.logIn(authToken);
+    setLoginFailed(false);
+    auth.logIn(result.data);
   };
 
   return (
     <>
-      <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
+      <ActivityIndicator visible={registerApi.loading} />
       <Screen style={styles.container}>
         <AppForm
-          initialValues={{ name: "", email: "", password: "" }}
+          initialValues={{email: "", password: "" }}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <AppErrorMessageText error={error} visible={error} />
-          <AppFormField
-            autoCorrect={false}
-            icon="account"
-            name="name"
-            placeholder="Name"
-          />
           <AppFormField
             autoCapitalize="none"
             autoCorrect={false}
@@ -75,8 +61,17 @@ function RegisterScreen() {
             autoCapitalize="none"
             autoCorrect={false}
             icon="lock"
-            name="password"
+            name="password1"
             placeholder="Password"
+            secureTextEntry
+            textContentType="password"
+          />
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="password2"
+            placeholder="Password (again)"
             secureTextEntry
             textContentType="password"
           />
