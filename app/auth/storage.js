@@ -18,9 +18,22 @@ const getToken = async () => {
   }
 };
 
+const storeUser = async (user) => {
+  try {
+
+    await SecureStore.setItemAsync('user',JSON.stringify(user));
+  } catch (error) {
+    console.log("Error storing the user", error);
+  }
+};
+
 const getUser = async () => {
-  const token = await getToken();
-  return token ? token : null;
+  try {
+    const user = await SecureStore.getItemAsync("user");
+    return JSON.parse(user);
+  } catch (error) {
+    console.log("Error getting the user", error);
+  }
 };
 
 const removeToken = async () => {
@@ -31,4 +44,12 @@ const removeToken = async () => {
   }
 };
 
-export default { getToken, getUser, removeToken, storeToken };
+const removeUser = async () => {
+  try {
+    await SecureStore.deleteItemAsync("user");
+  } catch (error) {
+    console.log("Error removing the user", error);
+  }
+};
+
+export default { getToken, getUser, removeToken, storeToken, storeUser, removeUser };

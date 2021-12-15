@@ -54,9 +54,8 @@ function AccountScreen({ navigation }) {
         <ListItem
           title={user.first_name}
           subTitle={user.email}
-          // title="Mosh Hamedani"
-          // subTitle="programmingwithmosh@gmail.com"
           image={require("../assets/mosh.jpg")}
+          onPress={() => navigation.navigate(routes.USER_DETAILS_EDIT)}
         />
       </View>
       <View style={styles.container}>
