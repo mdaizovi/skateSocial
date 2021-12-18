@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import useAuth from "../auth/useAuth";
-import { ListItem, ListItemSeparator } from "../components/lists";
+import { ListItem,ListItemChevron, ListItemSeparator } from "../components/lists";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
@@ -41,7 +41,7 @@ export default function UserDetailsEditScreen(props) {
         <ListItem>
           <Text>email</Text>
         </ListItem>
-        <ListItem
+        <ListItemChevron
           title="Resend Email Confirmation"
           IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
           onPress={() => resendConfirmationEmail()}
@@ -51,7 +51,7 @@ export default function UserDetailsEditScreen(props) {
 
 
       <View style={styles.container}>
-        <ListItem
+        <ListItemChevron
           title="Resend Email Confirmation"
           IconComponent={<Icon name="logout" backgroundColor="#ffe66d" />}
           onPress={() => resendConfirmationEmail()}

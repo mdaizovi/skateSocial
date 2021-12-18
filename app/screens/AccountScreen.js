@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
-import { ListItem, ListItemSeparator } from "../components/lists";
+import { ListItem, ListItemChevron, ListItemSeparator } from "../components/lists";
 import colors from "../config/colors";
 import Icon from "../components/Icon";
 import routes from "../navigation/routes";
@@ -51,7 +51,7 @@ function AccountScreen({ navigation }) {
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
-        <ListItem
+        <ListItemChevron
           title={user.first_name}
           subTitle={user.email}
           image={require("../assets/mosh.jpg")}
@@ -64,7 +64,7 @@ function AccountScreen({ navigation }) {
           keyExtractor={(menuItem) => menuItem.title}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
-            <ListItem
+            <ListItemChevron
               title={item.title}
               IconComponent={
                 <Icon

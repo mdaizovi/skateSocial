@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 
 import Screen from "../components/Screen";
 import {
-  ListItem,
+  ListItemChevron,
   ListItemDeleteAction,
   ListItemSeparator,
 } from "../components/lists";
@@ -39,7 +39,7 @@ function MessagesScreen(props) {
         data={messages}
         keyExtractor={(message) => message.id.toString()}
         renderItem={({ item }) => (
-          <ListItem
+          <ListItemChevron
             title={item.title}
             subTitle={item.description}
             image={item.image}
