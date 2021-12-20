@@ -12,9 +12,9 @@ import SearchPlacesTab from './search/searchPlacesTab';
 export default class SearchLocalScreen extends React.Component {
   state = {
     searchQuery: '',
-    searchResults:{'users':[], 'places':[]},
+    searchResults:{'users':null, 'places':null},
     index :0,
-    searchFailed: false
+    searchFailed: false,
   };
 
   updateSearch = async (searchQuery) => {
@@ -37,7 +37,7 @@ export default class SearchLocalScreen extends React.Component {
       this.setState({ searchFailed:true});
       } else {
         console.log(result.data);
-        this.setState({ searchResults:result.data });
+        this.setState({ searchResults:result.data, searched:true});
       }
   };
 
@@ -66,11 +66,19 @@ export default class SearchLocalScreen extends React.Component {
         {/* Hard to read but it works */}
         {(() => {
               if (this.state.index == 0){
-                  return (
-                    
-                  <SearchPeopleTab searchResults = {this.state.searchResults}/>
 
-                  )
+
+                  if(!this.state.searchResults.users){
+                    return (
+                      <Text>Search for skaters in your area</Text>
+                      )
+                                    
+                }else{
+                  return (
+                    <SearchPeopleTab searchResults = {this.state.searchResults}/>
+                    )
+                }
+
               } else if (this.state.index == 1){
                 return (
                   <SearchPlacesTab/>
