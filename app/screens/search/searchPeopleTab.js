@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { Text} from "react-native";
+import { StyleSheet, View, Text, FlatList} from "react-native";
 
 
 
 export default function SearchPeopleTab(props) {
 
   return (
-  <Text> This is the people search tab</Text>
+    <FlatList
+    data={props.searchResults.users}
+    renderItem={({ item }) => (
+        <View>
+            <Text>{item.name}</Text>
+        </View>
+    )}
+    keyExtractor={(item) => "" + item.pk}
+/>
   );
 }
 
