@@ -5,15 +5,30 @@ import Screen from "../components/Screen";
 import colors from "../config/colors";
 import { SearchBar, Tab, TabView, Button, ButtonGroup } from 'react-native-elements';
 
+import searchApi from "../api/search";
+import SearchPeopleTab from './search/searchPeopleTab';
+import SearchPlacesTab from './search/searchPlacesTab';
 
 export default class SearchLocalScreen extends React.Component {
   state = {
-    search: '',
+    searchQuery: '',
+    searchResults: {'people':[], 'places':[]},
     index :0,
+    searchFailed: false
   };
 
-  updateSearch = (search) => {
-    this.setState({ search });
+  updateSearch = async (searchQuery) => {
+    // this changes with every keystroke
+    console.log(searchQuery)
+
+    const result = await searchApi.getSearchResults(searchQuery);
+    if (!result.ok) {
+      this.setState({ searchFailed:true});
+      } else {
+        console.log(result.data);
+        this.setState({ searchResults:result.data });
+      }
+    this.setState({ searchQuery,});
   };
 
   updateIndex = (index) => {
@@ -21,9 +36,22 @@ export default class SearchLocalScreen extends React.Component {
     this.setState({ index });
   };
 
+  // handleSubmit = async ({ searchQuery }) => {
+  //   console.log(handleSubmit);
+  //   const result = await searchApi.getSearchResults(searchQuery);
+  //   if (!result.ok) {
+  //     let searchFailed = true
+  //     this.setState({ searchFailed});
+  //     } else {
+  //       console.log(result.data);
+  //       let searchResults = result.data;
+  //       this.setState({ searchResults });
+  //     }
+  // };
+
   render() {
 
-    const { search, index } = this.state;
+    const { searchQuery, index } = this.state;
 
     return (
       <Screen style={styles.screen}>
@@ -31,7 +59,7 @@ export default class SearchLocalScreen extends React.Component {
           <SearchBar
             placeholder="Type Here..."
             onChangeText={this.updateSearch}
-            value={search}
+            value={searchQuery}
           />
 
 
@@ -46,11 +74,11 @@ export default class SearchLocalScreen extends React.Component {
         {(() => {
               if (this.state.index == 0){
                   return (
-                      <Text>People search results</Text>
+                    <SearchPeopleTab/>
                   )
               } else if (this.state.index == 1){
                 return (
-                  <Text>Location search coming soon</Text>
+                  <SearchPlacesTab/>
                 )
               }
               return null;
