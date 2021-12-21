@@ -22,7 +22,7 @@ for (const [key, value] of Object.entries(settings)) {
     value["MakeFriendRequestURL"] = value["BackendUrl"] + "network/friends/add/";// add the friend id
     value["FriendRequestRespondURL"] = value["BackendUrl"] + "network/friend-request/respond/"; // add friend request id
     value["FriendRequestCancelURL"] = value["BackendUrl"] + "network/friend-request/cancel/"; // (del) add friend request id
-    value["UnfriendURL"] = value["BackendUrl"] + "network/friends/remove/"; // (del) friend id
+    value["UnfriendURL"] = value["BackendUrl"] + "network/friends/remove/"; // (del) friendship id
 
   }
 

@@ -1,20 +1,32 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, FlatList} from "react-native";
-
+import SearchFriendCard from "../../components/SearchFriendCard";
 
 
 export default function SearchPeopleTab(props) {
 
   return (
-    <FlatList
+
+  <FlatList
     data={props.searchResults.users}
+    keyExtractor={(item) => "" + item.id}
     renderItem={({ item }) => (
-        <View>
-            <Text>{item.name}</Text>
-        </View>
+      <SearchFriendCard
+        title={item.name}
+        subTitle={item.username}
+
+        //imageUrl={item.images[0].url}
+        //onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
+        //thumbnailUrl={item.images[0].thumbnailUrl}
+      />
+
     )}
-    keyExtractor={(item) => "" + item.pk}
-/>
+
+    />
+
+
+
+
   );
 }
 

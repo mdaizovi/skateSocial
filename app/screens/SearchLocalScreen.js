@@ -1,62 +1,58 @@
-import React from "react";
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList} from "react-native";
+
+import * as Location from 'expo-location';
+import { SearchBar, Tab, TabView, Button, ButtonGroup } from 'react-native-elements';
 
 import Screen from "../components/Screen";
 import colors from "../config/colors";
-import { SearchBar, Tab, TabView, Button, ButtonGroup } from 'react-native-elements';
-
 import searchApi from "../api/search";
 import SearchPeopleTab from './search/searchPeopleTab';
 import SearchPlacesTab from './search/searchPlacesTab';
+import useLocation from "../hooks/useLocation";
 
-export default class SearchLocalScreen extends React.Component {
-  state = {
-    searchQuery: '',
-    searchResults:{'users':null, 'places':null},
-    index :0,
-    searchFailed: false,
-  };
+export default function SearchLocalScreen() {
+  const [searchQuery, setsearchQuery] = useState('');
+  const [searchResults, setsearchResults] = useState({'users':null, 'places':null});
+  const [index, setindex] = useState(0);
+  const [searchFailed, setsearchFailed] = useState(false);
+  //location = useLocation();
 
-  updateSearch = async (searchQuery) => {
+  const updateSearch = async (searchQuery) => {
     // this changes with every keystroke
-    this.setState({ searchQuery});
+    setsearchQuery(searchQuery);
   };
 
-  updateIndex = (index) => {
+  const updateIndex = (index) => {
     console.log("updateIndex: "+index)
-    this.setState({ index });
+    setindex(index);
   };
 
-  handleSubmit = async () => {
+  const handleSubmit = async () => {
     console.log("handleSubmit");
-    const searchQuery = this.state.searchQuery;
-    console.log("searchQuery "+searchQuery);
+    console.log("searchQuery "+ searchQuery);
 
     const result = await searchApi.getSearchResults(searchQuery);
     if (!result.ok) {
-      this.setState({ searchFailed:true});
+      setsearchFailed(true);
       } else {
         console.log(result.data);
-        this.setState({ searchResults:result.data, searched:true});
+        setsearchResults(result.data);
       }
   };
-
-  render() {
-
-    const { searchQuery, index } = this.state;
 
     return (
       <Screen style={styles.screen}>
         <View style={styles.container}>
           <SearchBar
             placeholder="Search for people or places..."
-            onChangeText={this.updateSearch}
+            onChangeText={updateSearch}
             value={searchQuery}
-            onSubmitEditing={this.handleSubmit}
+            onSubmitEditing={handleSubmit}
           />
 
 
-        <Tab value={index} onChange={this.updateIndex}>
+        <Tab value={index} onChange={updateIndex}>
           <Tab.Item title="people" />
           <Tab.Item title="places" />
         </Tab>
@@ -65,21 +61,18 @@ export default class SearchLocalScreen extends React.Component {
 
         {/* Hard to read but it works */}
         {(() => {
-              if (this.state.index == 0){
-
-
-                  if(!this.state.searchResults.users){
+              if (index == 0){
+                  if(!searchResults.users){
                     return (
                       <Text>Search for skaters in your area</Text>
                       )
                                     
                 }else{
                   return (
-                    <SearchPeopleTab searchResults = {this.state.searchResults}/>
+                    <SearchPeopleTab searchResults = {searchResults}/>
                     )
                 }
-
-              } else if (this.state.index == 1){
+              } else if (index == 1){
                 return (
                   <SearchPlacesTab/>
                 )
@@ -93,7 +86,6 @@ export default class SearchLocalScreen extends React.Component {
 
     );
   }
-}
 
 const styles = StyleSheet.create({
   screen: {

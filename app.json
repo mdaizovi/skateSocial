@@ -17,7 +17,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to let user put a photo in their profile page, and when adding skate spots to the community map.",
+        "NSPhotoLibraryUsageDescription": "This app uses the camera to let user put a photo in their profile page, and when adding skate spots to the community map.",
+        "NSLocationWhenInUseUsageDescription":"This app uses location to let user search for nearby users and noteworthy locations in their vicinity"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +32,14 @@
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-location"
+    ],
+    "permissions":["CAMERA", "WRITE_EXTERNAL_STORAGE", "CAMERA_ROLL", 
+        "ACCESS_BACKGROUND_LOCATION", "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION","ACCESS_LOCATION_EXTRA_COMMANDS",
+        "ACCESS_MEDIA_LOCATION"
+      ]
   }
 }

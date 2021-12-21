@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from 'expo-app-loading';
 
@@ -7,7 +7,8 @@ import AppNavigator from "./app/navigation/AppNavigator";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import AuthContext from "./app/auth/context";
 import authStorage from "./app/auth/storage";
-
+// import * as Location from 'expo-location';
+// import * as Permissions from "expo-permissions";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -22,6 +23,19 @@ export default function App() {
     <AppLoading startAsync={restoreUser} onFinish={() => setIsReady(true)}
       onError={console.warn} />
   );
+
+  // const requestPermission = async () => {
+  //   // Get location permission
+  //   const result = Permissions.askAsync(Permissions.LOCATION_FOREGROUND, Permissions.LOCATION_BACKGROUND,Permissions.MEDIA_LIBRARY);
+  //   // result.granted if user granted all permissions
+  //   if (!result.granted)
+  //     alert('Please enable location services to find local skaters and spots')
+  // }
+  // // giving useEffect [] means it will get executed only once
+  // useEffect(()=>{
+  //   //requestPermission();
+
+  // }, [])
   
   return (
     <AuthContext.Provider value={{ user, setUser }}>
