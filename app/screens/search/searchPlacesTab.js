@@ -42,6 +42,7 @@ export default function SearchPlacesTab(props) {
   console.log("location in search places tab");
   console.log(location);
 
+
   return (  
     <View>
       <Text>Test</Text>
@@ -49,32 +50,25 @@ export default function SearchPlacesTab(props) {
       {(() => {
         if (hasLocationPermission){
               return (
-                <View>
-                  
+                <View style={styles.container}>
                   {!location ? (
                     <Text>fetching location...</Text>
                   ) : (
-  
                     <MapView
-                    style={{ alignSelf: 'stretch', height: '100%' }}
-                    region={
-                      
-
-{
-                      latitude: location.latitude,
-                      longitude: location.longitude,
-                      latitudeDelta: 0.0922,
-                      longitudeDelta: 0.0421}
-
-
-                    }
-                  />
+                      showsPointsOfInterest={false}
+                      showsUserLocation
+                      style={{ alignSelf: 'stretch', height: '100%' }}
+                      region={{
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421
+                      }}
+                    />
                   )}
-
-
-              </View>
+                </View>
                 )
-        }
+          }
         return <Text>Please enable location permissions so we can show you skate spots near you</Text>
       })()}
   </View>
@@ -83,6 +77,10 @@ export default function SearchPlacesTab(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
+    height: 400,
+    //width: 400,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 });
