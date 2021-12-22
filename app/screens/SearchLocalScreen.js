@@ -9,14 +9,12 @@ import colors from "../config/colors";
 import searchApi from "../api/search";
 import SearchPeopleTab from './search/searchPeopleTab';
 import SearchPlacesTab from './search/searchPlacesTab';
-import useLocation from "../hooks/useLocation";
 
 export default function SearchLocalScreen() {
   const [searchQuery, setsearchQuery] = useState('');
   const [searchResults, setsearchResults] = useState({'users':null, 'places':null});
   const [index, setindex] = useState(0);
   const [searchFailed, setsearchFailed] = useState(false);
-  //location = useLocation();
 
   const updateSearch = async (searchQuery) => {
     // this changes with every keystroke
