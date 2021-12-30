@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import { StyleSheet,  Text } from "react-native";
 import * as Yup from "yup";
 
+import colors from "../config/colors";
 import Screen from "../components/Screen";
 import registerApi from "../api/registration";
 import useAuth from "../auth/useAuth";

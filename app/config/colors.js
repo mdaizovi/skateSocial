@@ -1,20 +1,27 @@
+// https://encycolorpedia.com/ba4f00
 export default {
-    primary: "#fc5c65",
-    secondary: "#4ecdc4",
+    primary: "#ff5b00",
+    secondary: "#00b1ff",
+    grey: "#808080",
+
     veryLightGrey: "#e0e0e0",
     darkGrey: "#303030",
     veryDarkGrey: "#181818",
     slateGrey: "#444",
+
     black: "#000",
     white: '#fff',
-    red: "#ff0000",
-    blue: "#0000ff",
-    purple: "#550088",
+    red: "#ff004e",
+    orange: "#ff5b00",
+    blue: "#007fff",
+    mint: "#00ffa3",
+    purple: "#be03fc",
+    mauve: "#b199b1",
     inactive:"#000000",
     active:"#FFFFFF",
     
-    medium: "#6e6969",
-    light: "#f8f4f4",
-    dark: "#0c0c0c",
-    danger: "#ff5252",
+    medium: "#ff5b00",
+    light: "#ff7a39",
+    dark: "#d14d0a",
+    danger: "#ff004e",
 };

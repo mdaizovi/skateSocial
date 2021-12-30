@@ -13,16 +13,16 @@ const settings = {
     },
 }
 for (const [key, value] of Object.entries(settings)) {
-    value["logInURL"] = value["BackendUrl"] + "auth/login/";
-    value["RegisterURL"] = value["BackendUrl"] + "auth/registration/";
-    value["logOutURL"] = value["BackendUrl"] + "auth/logout/";
+    value["logInURL"] = value["BackendUrl"] + "v1/auth/login/";
+    value["RegisterURL"] = value["BackendUrl"] + "v1/auth/registration/";
+    value["logOutURL"] = value["BackendUrl"] + "v1/auth/logout/";
 
-    value["SearchURL"] = value["BackendUrl"] + "search/";
+    value["SearchURL"] = value["BackendUrl"] + "v1/search/";
 
-    value["MakeFriendRequestURL"] = value["BackendUrl"] + "network/friends/add/";// add the friend id
-    value["FriendRequestRespondURL"] = value["BackendUrl"] + "network/friend-request/respond/"; // add friend request id
-    value["FriendRequestCancelURL"] = value["BackendUrl"] + "network/friend-request/cancel/"; // (del) add friend request id
-    value["UnfriendURL"] = value["BackendUrl"] + "network/friends/remove/"; // (del) friendship id
+    value["MakeFriendRequestURL"] = value["BackendUrl"] + "v1/network/friends/add/";// add the friend id
+    value["FriendRequestRespondURL"] = value["BackendUrl"] + "v1/network/friend-request/respond/"; // add friend request id
+    value["FriendRequestCancelURL"] = value["BackendUrl"] + "v1/network/friend-request/cancel/"; // (del) add friend request id
+    value["UnfriendURL"] = value["BackendUrl"] + "v1/network/friends/remove/"; // (del) friendship id
 
   }
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import * as Yup from "yup";
 
+import colors from "../config/colors";
 import Screen from "../components/Screen";
 import {
   AppErrorMessageText,
