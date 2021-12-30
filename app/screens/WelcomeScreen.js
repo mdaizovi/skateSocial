@@ -2,7 +2,7 @@ import React from "react";
 import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
 import colors from "../config/colors";
 
-import Button from "../components/Button";
+import AppButton from "../components/Button";
 import routes from "../navigation/routes";
 
 function WelcomeScreen({ navigation }) {
@@ -18,20 +18,16 @@ function WelcomeScreen({ navigation }) {
       </View>
       
       <View style={styles.buttonsContainer}>
-        <View style={styles.buttonStyle}>
-          <Button
-            title="Login"
-            onPress={() => navigation.navigate(routes.LOGIN)}
-          />
-        </View>
-        <View style={styles.buttonStyle}>
-          <Button
-            style={styles.buttonStyle}
-            title="Register"
-            color="secondary"
-            onPress={() => navigation.navigate(routes.REGISTER)}
-          />
-         </View> 
+        <AppButton
+          title="Login"
+          onPress={() => navigation.navigate(routes.LOGIN)}
+        />
+
+        <AppButton
+          title="Register"
+          color="secondary"
+          onPress={() => navigation.navigate(routes.REGISTER)}
+        />
       </View>
     </ImageBackground>
   );
@@ -47,11 +43,6 @@ const styles = StyleSheet.create({
     paddingHorizontal:40,
     width: "100%",
     bottom:75,
-  },
-  buttonStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
   },
   logo: {
     width: 120,

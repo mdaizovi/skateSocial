@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import { StyleSheet,  Text } from "react-native";
+import { StyleSheet,  Text, View } from "react-native";
 import * as Yup from "yup";
 
 import colors from "../config/colors";
@@ -54,6 +54,7 @@ function RegisterScreen() {
             autoCorrect={false}
             icon="email"
             keyboardType="email-address"
+            label="Email"
             name="email"
             placeholder="Email"
             textContentType="emailAddress"
@@ -62,6 +63,7 @@ function RegisterScreen() {
             autoCapitalize="none"
             autoCorrect={false}
             icon="lock"
+            label="Password"
             name="password1"
             placeholder="Password"
             secureTextEntry
@@ -71,12 +73,15 @@ function RegisterScreen() {
             autoCapitalize="none"
             autoCorrect={false}
             icon="lock"
+            label = "Password (again)"
             name="password2"
             placeholder="Password (again)"
             secureTextEntry
             textContentType="password"
           />
-          <AppSubmitButton title="Register" />
+        <View style={styles.buttonsContainer}>
+          <AppSubmitButton title="Register" color= "secondary" />
+        </View>  
         </AppForm> 
       </Screen>
     </>
@@ -87,6 +92,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
   },
+  buttonsContainer: {
+    paddingHorizontal:40,
+    width: "100%",
+    bottom:30,
+  },  
 });
 
 export default RegisterScreen;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Text, View } from "react-native";
 import * as Yup from "yup";
 
 import colors from "../config/colors";
@@ -32,7 +32,7 @@ function LoginScreen(props) {
   };
 
   return (
-    <Screen style={styles.container}>
+    <Screen style={styles.container} >
       <Image style={styles.logo} source={require("../assets/logo.png")} />
 
       <AppForm
@@ -49,26 +49,29 @@ function LoginScreen(props) {
           autoCorrect={false}
           icon="email"
           keyboardType="email-address"
+          label="Email"
           name="email"
           placeholder="Email"
-          style={styles.TextInput}
           textContentType="emailAddress"
         />
         <AppFormField
           autoCapitalize="none"
           autoCorrect={false}
           icon="lock"
+          label="Password"
           name="password"
           placeholder="Password"
           secureTextEntry
-          style={styles.TextInput}
           textContentType="password"
         />
-        <AppSubmitButton title="Login" />
+
+        <View style={styles.buttonsContainer}>
+          <AppSubmitButton title="Login" />
+        </View>  
       </AppForm>
 
       <TouchableOpacity>
-        <Text style={styles.link_button}>Forgot Password?</Text>
+        <Text>Forgot Password?</Text>
       </TouchableOpacity>
 
     </Screen>
@@ -77,11 +80,11 @@ function LoginScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
     flex: 1,
-    //backgroundColor: "#fff",
+    backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    top: 50,
+    width: "100%",
   },
   logo: {
     width: 80,
@@ -90,27 +93,12 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginBottom: 20,
   },
+  buttonsContainer: {
+    paddingHorizontal:40,
+    width: "100%",
+    bottom:30,
+  },  
   image: {
-    marginBottom: 40,
-  },
-  inputView: {
-    backgroundColor: "#FFC0CB",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
-    marginBottom: 20,
- 
-    alignItems: "center",
-  },
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
-  },
- 
-  linkButton: {
-    height: 30,
     marginBottom: 30,
   },
 });
