@@ -23,6 +23,7 @@ function LoginScreen(props) {
   const [loginFailed, setLoginFailed] = useState(false);
 
   const handleSubmit = async ({ email, password }) => {
+    console.log("handle submit")
     const result = await authApi.login(email, password);
     if (!result.ok) {
       return setLoginFailed(true);
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    top: 50,
+    top: 20,
     width: "100%",
   },
   logo: {
@@ -96,7 +97,8 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     paddingHorizontal:40,
     width: "100%",
-    bottom:30,
+    position:"absolute",
+    bottom:125,
   },  
   image: {
     marginBottom: 30,

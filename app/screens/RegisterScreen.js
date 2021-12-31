@@ -79,9 +79,11 @@ function RegisterScreen() {
             secureTextEntry
             textContentType="password"
           />
+
         <View style={styles.buttonsContainer}>
-          <AppSubmitButton title="Register" color= "secondary" />
+          <AppSubmitButton title="Register" color="secondary" />
         </View>  
+
         </AppForm> 
       </Screen>
     </>
@@ -90,13 +92,18 @@ function RegisterScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    top: 20,
+    width: "100%",
   },
   buttonsContainer: {
     paddingHorizontal:40,
     width: "100%",
-    bottom:30,
-  },  
+    position:"absolute",
+    bottom:125,
+  },   
 });
 
 export default RegisterScreen;
