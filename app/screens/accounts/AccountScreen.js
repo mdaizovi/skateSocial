@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
-import { ListItem, ListItemChevron, ListItemSeparator } from "../components/lists";
-import colors from "../config/colors";
-import Icon from "../components/Icon";
-import routes from "../navigation/routes";
-import Screen from "../components/Screen";
+import { ListItem, ListItemChevron, ListItemSeparator } from "../../components/lists";
+import colors from "../../config/colors";
+import Icon from "../../components/Icon";
+import routes from "../../navigation/routes";
+import Screen from "../../components/Screen";
 
 const menuItems = [
   {
@@ -15,35 +15,35 @@ const menuItems = [
       backgroundColor: colors.primary,
     },
   },
-  {
-    title: "My Tricks",
-    icon: {
-      name: "format-list-bulleted",
-      backgroundColor: colors.primary,
-    },
-  },
-  {
-    title: "My Videos",
-    icon: {
-      name: "format-list-bulleted",
-      backgroundColor: colors.primary,
-    },
-  },
-  {
-    title: "My Spots (bookmarked? added?)",
-    icon: {
-      name: "format-list-bulleted",
-      backgroundColor: colors.primary,
-    },
-  },
-  {
-    title: "My Messages",
-    icon: {
-      name: "email",
-      backgroundColor: colors.secondary,
-    },
-    targetScreen: routes.MESSAGES,
-  },
+  // {
+  //   title: "My Tricks",
+  //   icon: {
+  //     name: "format-list-bulleted",
+  //     backgroundColor: colors.primary,
+  //   },
+  // },
+  // {
+  //   title: "My Videos",
+  //   icon: {
+  //     name: "format-list-bulleted",
+  //     backgroundColor: colors.primary,
+  //   },
+  // },
+  // {
+  //   title: "My Spots (bookmarked? added?)",
+  //   icon: {
+  //     name: "format-list-bulleted",
+  //     backgroundColor: colors.primary,
+  //   },
+  // },
+  // {
+  //   title: "My Messages",
+  //   icon: {
+  //     name: "email",
+  //     backgroundColor: colors.secondary,
+  //   },
+  //   targetScreen: routes.MESSAGES,
+  // },
 ];
 
 function AccountScreen({ navigation }) {
@@ -54,7 +54,7 @@ function AccountScreen({ navigation }) {
         <ListItemChevron
           title={user.first_name}
           subTitle={user.email}
-          image={require("../assets/mosh.jpg")}
+          image={require("../../assets/mosh.jpg")}
           onPress={() => navigation.navigate(routes.USER_DETAILS_EDIT)}
         />
       </View>
@@ -88,7 +88,7 @@ function AccountScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.light,
+    backgroundColor: colors.background,
   },
   container: {
     marginVertical: 20,

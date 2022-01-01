@@ -19,10 +19,8 @@ for (const [key, value] of Object.entries(settings)) {
 
     value["SearchURL"] = value["BackendUrl"] + "v1/search/";
 
-    value["MakeFriendRequestURL"] = value["BackendUrl"] + "v1/network/friends/add/";// add the friend id
-    value["FriendRequestRespondURL"] = value["BackendUrl"] + "v1/network/friend-request/respond/"; // add friend request id
-    value["FriendRequestCancelURL"] = value["BackendUrl"] + "v1/network/friend-request/cancel/"; // (del) add friend request id
-    value["UnfriendURL"] = value["BackendUrl"] + "v1/network/friends/remove/"; // (del) friendship id
+    value["ResendConfirmationEmailURL"] = value["BackendUrl"] + "v1/auth/registration/resend-email/";
+
 
   }
 
