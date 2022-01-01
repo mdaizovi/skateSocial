@@ -1,69 +1,89 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Text, View } from "react-native";
+import * as Yup from "yup";
 
+import colors from "../../config/colors";
 import Screen from "../../components/Screen";
 import {
-  ListItem,
-  ListItemDeleteAction,
-  ListItemSeparator,
-} from "../../components/lists";
+  AppErrorMessageText,
+  AppForm,
+  AppFormField,
+  AppSubmitButton,
+} from "../../components/forms";
+import useAuth from "../../auth/useAuth";
+import userApi from "../../api/user";
 
-const initialMessages = [
-  {
-    id: 1,
-    title: "Mosh Hamedani",
-    description: "Hey! Is this item still available?",
-    image: require("../../assets/mosh.jpg"),
-  },
-  {
-    id: 2,
-    title: "Mosh Hamedani",
-    description:
-      "I'm interested in this item. When will you be able to post it?",
-    image: require("../../assets/mosh.jpg"),
-  },
-];
+const validationSchema = Yup.object().shape({
+  // enforce utf8 and no emojis?
+  name: Yup.string().required().min(2).label("name"),
+});
+
 
 export default function EditNameScreen(props) {
-  const [messages, setMessages] = useState(initialMessages);
-  const [refreshing, setRefreshing] = useState(false);
+  const auth = useAuth();
+  const [saveAttempted, setSaveAttempted] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
+  const [error, setError] = useState();
 
-  const handleDelete = (message) => {
-    // Delete the message from messages
-    setMessages(messages.filter((m) => m.id !== message.id));
+  const handleSubmit = async ({name}) => {
+    setSaveAttempted(true);
+    const result = await userApi.update({"name":name});
+    if (!result.ok) {
+      if (result.data) setError(result.data.name);
+      return setSaveFailed(true);
+      }
+    setSaveFailed(false);
+    auth.updateUser(result.data);
   };
 
   return (
-    <Screen>
-      <FlatList
-        data={messages}
-        keyExtractor={(message) => message.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.title}
-            subTitle={item.description}
-            image={item.image}
-            onPress={() => console.log("Message selected", item)}
-            renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
-            )}
+    <Screen style={styles.container} >
+
+    {saveAttempted && !saveFailed ? (
+				<Text>Saved!!!</Text>
+			) : (
+				<>
+        <AppForm
+          initialValues={{ name: "" }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <AppErrorMessageText
+            error={error} visible={error}
           />
-        )}
-        ItemSeparatorComponent={ListItemSeparator}
-        refreshing={refreshing}
-        onRefresh={() => {
-          setMessages([
-            {
-              id: 2,
-              title: "T2",
-              description: "D2",
-              image: require("../../assets/mosh.jpg"),
-            },
-          ]);
-        }}
-      />
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            label="Name"
+            name="name"
+            placeholder="your name"
+          />
+
+          <View style={styles.buttonsContainer}>
+            <AppSubmitButton title="Save" />
+          </View>  
+        </AppForm>
+
+			  </>
+			)}
+
     </Screen>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    top: 20,
+    width: "100%",
+  },
+  buttonsContainer: {
+    paddingHorizontal:40,
+    width: "100%",
+    position:"absolute",
+    bottom:125,
+  },  
+});

@@ -24,5 +24,11 @@ export default useAuth = () => {
     authStorage.removeUser();
   };
 
-  return { user, logIn, logOut };
+  const updateUser = (data) => {
+    const user = data
+    authStorage.storeUser(user);
+    setUser(user);
+  };
+
+  return { user, logIn, logOut, updateUser };
 };

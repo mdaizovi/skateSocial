@@ -14,8 +14,9 @@ const settings = {
 }
 for (const [key, value] of Object.entries(settings)) {
     value["logInURL"] = value["BackendUrl"] + "v1/auth/login/";
-    value["RegisterURL"] = value["BackendUrl"] + "v1/auth/registration/";
     value["logOutURL"] = value["BackendUrl"] + "v1/auth/logout/";
+    value["RegisterURL"] = value["BackendUrl"] + "v1/auth/registration/";
+    value["UserUpdateURL"] = value["BackendUrl"] + "v1/auth/user/";
 
     value["SearchURL"] = value["BackendUrl"] + "v1/search/";
 
