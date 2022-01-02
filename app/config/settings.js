@@ -1,17 +1,6 @@
 import Constants from 'expo-constants'
+import seccints from "../../secrets";
 
-const settings = {
-    
-    dev: {
-        BackendUrl: "http://127.0.0.1:8000/api/",
-    },
-    staging: {
-        BackendUrl: "https://www.oldiesinanotherroom.com/api/", // change me, obviously
-    },
-    prod: {
-        BackendUrl: "https://www.oldiesinanotherroom.com/api/", // change me, obviously
-    },
-}
 for (const [key, value] of Object.entries(settings)) {
     value["logInURL"] = value["BackendUrl"] + "v1/auth/login/";
     value["logOutURL"] = value["BackendUrl"] + "v1/auth/logout/";
