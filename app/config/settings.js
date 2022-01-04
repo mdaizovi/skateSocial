@@ -1,5 +1,5 @@
 import Constants from 'expo-constants'
-import seccints from "../../secrets";
+import settings from "../secrets";
 
 for (const [key, value] of Object.entries(settings)) {
     value["logInURL"] = value["BackendUrl"] + "v1/auth/login/";
