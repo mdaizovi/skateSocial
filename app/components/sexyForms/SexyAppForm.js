@@ -64,17 +64,13 @@ const SexyAppForm = ({  fields, buttonText, action, afterSubmit }) => {
   
     const errors = validateFields(fields, values);
     if (hasValidationError(errors)) {
-      return setValidationErrors(errors);
-    }
-    fadeOut();
-    
-    if (hasValidationError(errors)) {
       await animationTimeout();
       setSubmitting(false);
       fadeIn();
       return setValidationErrors(errors);
     }
-
+    fadeOut();
+    
     try {
       const [result] = await Promise.all([
         action(...getValues()),

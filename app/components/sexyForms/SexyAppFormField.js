@@ -1,21 +1,82 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, StyleSheet } from 'react-native';
+import {Animated, Text, TextInput, View, StyleSheet } from 'react-native';
 
 
-const SexyAppFormField = ({ fieldName, field, value, onChangeText, error }) => {
-  return (
-    <View style={styles.inputContainer}>
-      <Text>{field.label}</Text>
-      <TextInput
-        style={styles.input}
-        {...field.inputProps}
-        value={value}
-        onChangeText={(text) => onChangeText(fieldName, text)}
-      />
-      <Text style={styles.error}>{error}</Text>
-    </View>
-  );
-};
+export default class SexyAppFormField extends React.Component {
+  position = new Animated.Value(0);
+
+  shiftPosition(distance) {
+    const duration = 50;
+    return Animated.timing(this.position, {
+      toValue: distance,
+      duration,
+      useNativeDriver: true,
+    });
+  }
+
+  startShake = () => {
+    console.log("startShake");
+    const distance = 10;
+
+    Animated.sequence([
+      this.shiftPosition(distance),
+      this.shiftPosition(-distance),
+      this.shiftPosition(distance),
+      this.shiftPosition(-distance),
+      this.shiftPosition(distance),
+      this.shiftPosition(0),
+    ]).start();
+  };
+
+  shake() {
+    setTimeout(this.startShake, 100);
+    console.log("shake");
+  };
+  
+  componentDidUpdate(prevProps) {
+    console.log("componentDidUpdate");
+    if (
+      // prevProps.isSubmitting &&
+      // !this.props.isSubmitting &&
+      this.props.error
+    ) {
+      this.shake();
+    }
+  };
+
+  render() {
+    const { fieldName, field, value, onChangeText, error } = this.props;
+    return (
+      <Animated.View
+      style={{ transform: [{translateX: this.position}], ...styles.inputContainer }}
+      >
+        <Text>{field.label}</Text>
+        <TextInput
+          style={styles.input}
+          {...field.inputProps}
+          value={value}
+          onChangeText={(text) => onChangeText(fieldName, text)}
+        />
+        <Text style={styles.error}>{error}</Text>
+      </Animated.View>
+    );
+  }
+}
+
+// const SexyAppFormField = ({ fieldName, field, value, onChangeText, error }) => {
+//   return (
+//     <View style={styles.inputContainer}>
+//       <Text>{field.label}</Text>
+//       <TextInput
+//         style={styles.input}
+//         {...field.inputProps}
+//         value={value}
+//         onChangeText={(text) => onChangeText(fieldName, text)}
+//       />
+//       <Text style={styles.error}>{error}</Text>
+//     </View>
+//   );
+// };
 
 const styles = StyleSheet.create({
   input: {
@@ -39,4 +100,4 @@ const styles = StyleSheet.create({
   error: { textAlign: 'center', height: 17.5 },
 });
 
-export default SexyAppFormField;
+// export default SexyAppFormField;
