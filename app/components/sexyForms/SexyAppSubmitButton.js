@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from "react";
 import {Animated, TouchableWithoutFeedback, View, Text, StyleSheet } from 'react-native';
 
 
 const SexyAppSubmitButton = ({ title, onPress }) => {
   const [offset] = useState(new Animated.Value(1));
   const [scale] = useState(new Animated.Value(1));
+  //const pan = useRef(new Animated.ValueXY()).current;
+  //const offset = useRef(new Animated.Value(1)).current;
+  //const scale = useRef(new Animated.Value(1)).current;
 
   const handlePress = async () => {
     Animated.spring(offset, {
       toValue: 5,
+      friction: 1,
       useNativeDriver: true
     }).start();
     Animated.spring(scale, {
       toValue: 0.96,
+      friction: 1,
       useNativeDriver: true
     }).start();
 
     await onPress();
     Animated.spring(offset, {
       toValue: 0,
+      friction: 1,
       useNativeDriver: true
     }).start();
     Animated.spring(scale, {
       toValue: 1,
+      friction: 1,
       useNativeDriver: true
     }).start();
   };
