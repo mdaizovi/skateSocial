@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import {Animated, TouchableWithoutFeedback, View, Text, StyleSheet } from 'react-native';
+import {Animated, ActivityIndicator, TouchableWithoutFeedback, View, Text, StyleSheet } from 'react-native';
 
 
-const SexyAppSubmitButton = ({ title, onPress }) => {
+const SexyAppSubmitButton = ({ title, onPress, isSubmitting}) => {
   const [offset] = useState(new Animated.Value(1));
   const [scale] = useState(new Animated.Value(1));
   //const pan = useRef(new Animated.ValueXY()).current;
@@ -43,7 +43,11 @@ const SexyAppSubmitButton = ({ title, onPress }) => {
   return (
     <TouchableWithoutFeedback onPressIn={handlePress}>
       <Animated.View style={{ transform, ...styles.container }}>
-        <Text style={styles.text}>{title}</Text>
+      {isSubmitting ? (
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          ) : (
+            <Text style={styles.text}>{title}</Text>
+          )}
       </Animated.View>
     </TouchableWithoutFeedback>
   );
