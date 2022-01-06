@@ -15,7 +15,6 @@ export default class SexyAppFormField extends React.Component {
   }
 
   startShake = () => {
-    console.log("startShake");
     const distance = 10;
 
     Animated.sequence([
@@ -30,11 +29,9 @@ export default class SexyAppFormField extends React.Component {
 
   shake() {
     setTimeout(this.startShake, 100);
-    console.log("shake");
   };
   
   componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate");
     if (
       // prevProps.isSubmitting &&
       // !this.props.isSubmitting &&
