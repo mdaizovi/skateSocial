@@ -16,15 +16,16 @@ const getInitialState = (fieldKeys) => {
 const animationTimeout = () =>
   new Promise((resolve) => setTimeout(resolve, 700));
   
-const SexyAppForm = ({ fields, buttonText, action, afterSubmit }) => {
+const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema }) => {
   const fieldKeys = Object.keys(fields);
   const [values, setValues] = useState(getInitialState(fieldKeys));
   const [errorMessage, setErrorMessage] = useState('');
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const [isSubmitting, setSubmitting] = useState(false);
+
   const [validationErrors, setValidationErrors] = useState(
     getInitialState(fieldKeys),
   );
-  const fadeAnim = useRef(new Animated.Value(1)).current;
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const onChangeValue = (key, value) => {
     const newState = { ...values, [key]: value };
@@ -62,7 +63,12 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit }) => {
     setErrorMessage('');
     setValidationErrors(getInitialState(fieldKeys));
   
-    const errors = validateFields(fields, values);
+
+
+    //const errors = validateFields(fields, values, validationSchema);
+    const errors = {"email":"error 1", "password":"error 2"}
+
+
     if (hasValidationError(errors)) {
       await animationTimeout();
       setSubmitting(false);
@@ -70,6 +76,10 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit }) => {
       return setValidationErrors(errors);
     }
     fadeOut();
+    
+
+
+
     
     try {
       const [result] = await Promise.all([

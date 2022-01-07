@@ -40,6 +40,20 @@ export const validateFields = (fields, values) => {
   return errors;
 };
 
+
+export const fieldValues = (fields, values) => {
+  const fieldValueDict = {};
+  const fieldKeys = Object.keys(fields);
+  fieldKeys.forEach((key) => {
+    const field = fields[key];
+    const value = values[key];
+    fieldValueDict[key] = value
+  });
+
+  return fieldValueDict;
+};
+
+
 export const hasValidationError = (errors) => {
   return Object.values(errors).find((error) => error.length > 0);
 };

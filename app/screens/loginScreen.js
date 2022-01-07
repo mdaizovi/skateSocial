@@ -6,7 +6,6 @@ import colors from "../config/colors";
 import Screen from "../components/Screen";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
-import { validateContent, validateLength } from '../components/sexyForms/SexyAppFormValidation';
 import {
   SexyAppForm
 } from "../components/sexyForms";
@@ -29,21 +28,16 @@ function LoginScreen(props) {
   };
 
   const handleResult = async (result) => {
-    console.log("Handle result");
-    console.log(result.data);
     if (result.ok && result.data) {
       setLoginFailed(false);
       auth.logIn(result.data);
-    } else if (result.status === 401) {
-      console.log(401)
-      setLoginFailed(true);
-      throw new Error(result.data.non_field_errors[0]);
+    // } else if (result.status === 401) {
+    //   setLoginFailed(true);
+    //   throw new Error(result.data.non_field_errors[0]);
     } else {
-      console.log("other error")
       setLoginFailed(true);
       throw new Error(result.data.non_field_errors[0]);
     }
-  
   };
 
   return (
@@ -51,23 +45,25 @@ function LoginScreen(props) {
       <Image style={styles.logo} source={require("../assets/logo.png")} />
 
     <SexyAppForm
-
     action={login}
     afterSubmit={handleResult}
     buttonText="Submit"
+    validationSchema = {validationSchema}
     fields={{
       email: {
         label: 'Email',
-        validators: [validateContent],
         inputProps: {
           keyboardType: 'email-address',
+          autoCapitalize: 'none',
+          autoCorrect: false,
         },
       },
       password: {
         label: 'Password',
-        validators: [validateContent, validateLength],
         inputProps: {
           secureTextEntry: true,
+          autoCapitalize: 'none',
+          autoCorrect: false,
         },
       },
     }}

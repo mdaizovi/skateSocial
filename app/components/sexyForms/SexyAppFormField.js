@@ -60,21 +60,6 @@ export default class SexyAppFormField extends React.Component {
   }
 }
 
-// const SexyAppFormField = ({ fieldName, field, value, onChangeText, error }) => {
-//   return (
-//     <View style={styles.inputContainer}>
-//       <Text>{field.label}</Text>
-//       <TextInput
-//         style={styles.input}
-//         {...field.inputProps}
-//         value={value}
-//         onChangeText={(text) => onChangeText(fieldName, text)}
-//       />
-//       <Text style={styles.error}>{error}</Text>
-//     </View>
-//   );
-// };
-
 const styles = StyleSheet.create({
   input: {
     height: 40,
@@ -96,5 +81,3 @@ const styles = StyleSheet.create({
   },
   error: { textAlign: 'center', height: 17.5 },
 });
-
-// export default SexyAppFormField;
