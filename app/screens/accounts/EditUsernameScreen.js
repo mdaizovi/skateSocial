@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { validateContent, validateLength } from '../../components/sexyForms/SexyAppFormValidation';
-import * as Yup from "yup";
 import {
   SexyAppForm
 } from "../../components/sexyForms";
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(8).label("Password"),
-});
-
 
 export default function EditUsernameScreen(props) {
-  const [refreshing, setRefreshing] = useState(false);
 
   const login = () => {
     console.log("do nothing");

@@ -4,14 +4,13 @@ import * as Yup from "yup";
 
 import colors from "../config/colors";
 import Screen from "../components/Screen";
-import {
-  AppErrorMessageText,
-  AppForm,
-  AppFormField,
-  AppSubmitButton,
-} from "../components/forms";
 import authApi from "../api/auth";
 import useAuth from "../auth/useAuth";
+import { validateContent, validateLength } from '../components/sexyForms/SexyAppFormValidation';
+import {
+  SexyAppForm
+} from "../components/sexyForms";
+
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -22,55 +21,58 @@ function LoginScreen(props) {
   const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
 
-  const handleSubmit = async ({ email, password }) => {
-    console.log("login handle submit")
-    const result = await authApi.login(email, password);
-    if (!result.ok) {
-      return setLoginFailed(true);
-      }
-    setLoginFailed(false);
-    auth.logIn(result.data);
+  const login = async (email, password) => {
+    console.log("new login");
+    console.log(email);
+    console.log(password);
+    return result = await authApi.login(email, password);
+  };
+
+  const handleResult = async (result) => {
+    console.log("Handle result");
     console.log(result.data);
+    if (result.ok && result.data) {
+      setLoginFailed(false);
+      auth.logIn(result.data);
+    } else if (result.status === 401) {
+      console.log(401)
+      setLoginFailed(true);
+      throw new Error(result.data.non_field_errors[0]);
+    } else {
+      console.log("other error")
+      setLoginFailed(true);
+      throw new Error(result.data.non_field_errors[0]);
+    }
+  
   };
 
   return (
     <Screen style={styles.container} >
       <Image style={styles.logo} source={require("../assets/logo.png")} />
 
-      <AppForm
-        initialValues={{ email: "", password: "" }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <AppErrorMessageText
-          error="Invalid email and/or password."
-          visible={loginFailed}
-        />
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="email"
-          keyboardType="email-address"
-          label="Email"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
-        />
-        <AppFormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          label="Password"
-          name="password"
-          placeholder="Password"
-          secureTextEntry
-          textContentType="password"
-        />
+    <SexyAppForm
 
-        <View style={styles.buttonsContainer}>
-          <AppSubmitButton title="Login" />
-        </View>  
-      </AppForm>
+    action={login}
+    afterSubmit={handleResult}
+    buttonText="Submit"
+    fields={{
+      email: {
+        label: 'Email',
+        validators: [validateContent],
+        inputProps: {
+          keyboardType: 'email-address',
+        },
+      },
+      password: {
+        label: 'Password',
+        validators: [validateContent, validateLength],
+        inputProps: {
+          secureTextEntry: true,
+        },
+      },
+    }}
+  
+  />
 
       <TouchableOpacity>
         <Text>Forgot Password?</Text>

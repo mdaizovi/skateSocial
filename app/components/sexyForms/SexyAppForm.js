@@ -16,7 +16,7 @@ const getInitialState = (fieldKeys) => {
 const animationTimeout = () =>
   new Promise((resolve) => setTimeout(resolve, 700));
   
-const SexyAppForm = ({  fields, buttonText, action, afterSubmit }) => {
+const SexyAppForm = ({ fields, buttonText, action, afterSubmit }) => {
   const fieldKeys = Object.keys(fields);
   const [values, setValues] = useState(getInitialState(fieldKeys));
   const [errorMessage, setErrorMessage] = useState('');
@@ -77,13 +77,11 @@ const SexyAppForm = ({  fields, buttonText, action, afterSubmit }) => {
         animationTimeout(),
       ]);
       await afterSubmit(result);
-      fadeIn();
     } catch (e) {
-      //await delay(1000);
       setErrorMessage(e.message);
-      setSubmitting(false);
-      fadeIn();
     }
+    fadeIn();
+    setSubmitting(false);
   };
 
 return (
