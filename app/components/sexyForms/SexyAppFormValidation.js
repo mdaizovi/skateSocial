@@ -21,21 +21,24 @@ export const validateField = (validators, value) => {
   return error;
 };
 
-export const validateFields = (fields, values) => {
+export const validateFields = (fields, values, validationSchema) => {
   const errors = {};
   const fieldKeys = Object.keys(fields);
-  fieldKeys.forEach((key) => {
-    const field = fields[key];
-    const validators = field.validators;
-    const value = values[key];
-    if (validators && validators.length > 0) {
-      const error = validateField(validators, value);
+  data = fieldValues(fields, values);
 
-      if (error) {
-        errors[key] = error;
-      }
+  try {
+    validationSchema.validateSync(data, { abortEarly: false });
+    return {}
+  } catch (e) {
+    //console.log(JSON.stringify(e, null, 2));
+    const errorList = e.inner;
+    for (const element of errorList) { // You can use `let` instead of `const` if you like
+      let path = element.path;
+      let message = element.message;
+      errors[path] = message;
     }
-  });
+    
+  }
 
   return errors;
 };

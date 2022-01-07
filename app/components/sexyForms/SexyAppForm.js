@@ -65,9 +65,11 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
   
 
 
-    //const errors = validateFields(fields, values, validationSchema);
-    const errors = {"email":"error 1", "password":"error 2"}
+    const errors = validateFields(fields, values, validationSchema);
+    //const errors = {"email":"error 1", "password":"error 2"}
 
+    console.log("errors");
+    console.log(errors);
 
     if (hasValidationError(errors)) {
       await animationTimeout();
