@@ -22,7 +22,9 @@ function RegisterScreen(props) {
   const auth = useAuth();
   const [requestFailed, setRequestFailed] = useState(false);
 
-  const register = async (email, password) => {
+  //const register = async (email, password) => {
+  const register = async ({userInfo}) => {
+    //return await registerApi.register(email, password);
     return await registerApi.register(userInfo);
   };
 
@@ -43,7 +45,6 @@ function RegisterScreen(props) {
       setRequestFailed(true);
       throw new Error("Something went wrong");
     }
-
   };
 
   return (

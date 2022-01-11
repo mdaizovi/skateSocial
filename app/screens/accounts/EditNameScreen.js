@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import { StyleSheet, Image, TouchableOpacity, Text, View } from "react-native";
 import * as Yup from "yup";
 
-import colors from "../../config/colors";
 import Screen from "../../components/Screen";
 import {
-  AppErrorMessageText,
-  AppForm,
-  AppFormField,
-  AppSubmitButton,
-} from "../../components/forms";
+  SexyAppForm
+} from "../../components/sexyForms";
 import useAuth from "../../auth/useAuth";
 import userApi from "../../api/user";
 
@@ -23,18 +19,32 @@ export default function EditNameScreen(props) {
   const auth = useAuth();
   const [saveAttempted, setSaveAttempted] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
-  const [error, setError] = useState();
 
-  const handleSubmit = async ({name}) => {
-    setSaveAttempted(true);
-    const result = await userApi.update({"name":name});
-    if (!result.ok) {
-      if (result.data) setError(result.data.name);
-      return setSaveFailed(true);
-      }
-    setSaveFailed(false);
-    auth.updateUser(result.data);
+  const save = async (name) => {
+    return await userApi.update({"name":name});
   };
+
+  const handleResult = async (result) => {
+    setSaveAttempted(true);
+    if (result) {
+      if (result.ok && result.data) {
+        setSaveFailed(false);
+        auth.updateUser(result.data);
+      } else if (result.data) {
+        setError(result.data.name);
+        setSaveFailed(true);
+        // TODO forog thow to check if .non_field_errors exists.
+        throw new Error(result.data.non_field_errors[0]);
+      } else {
+        setSaveFailed(true);
+        throw new Error("Something went wrong");
+      }
+    } else {
+      setSaveFailed(true);
+      throw new Error("Something went wrong");
+    }
+  };
+
 
   return (
     <Screen style={styles.container} >
@@ -43,27 +53,22 @@ export default function EditNameScreen(props) {
 				<Text>Saved!!!</Text>
 			) : (
 				<>
-        <AppForm
-          initialValues={{ name: "" }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <AppErrorMessageText
-            error={error} visible={error}
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="lock"
-            label="Name"
-            name="name"
-            placeholder="your name"
-          />
-
-          <View style={styles.buttonsContainer}>
-            <AppSubmitButton title="Save" />
-          </View>  
-        </AppForm>
+          <SexyAppForm
+            action={save}
+            afterSubmit={handleResult}
+            buttonText="Save"
+            validationSchema = {validationSchema}
+            fields={{
+              name: {
+                label: 'Name',
+                inputProps: {
+                  keyboardType: 'name-phone-pad',
+                  //autoCapitalize: 'none',
+                  autoCorrect: false,
+                },
+              },
+            }}
+        />
 
 			  </>
 			)}
