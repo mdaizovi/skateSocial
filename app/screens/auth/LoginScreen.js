@@ -27,6 +27,7 @@ function LoginScreen(props) {
   const handleResult = async (result) => {
     if (result.ok && result.data) {
       setLoginFailed(false);
+      auth.logIn(result.data);
     } else if (result.data) {
       setLoginFailed(true);
       throw new Error(result.data.non_field_errors[0]);
