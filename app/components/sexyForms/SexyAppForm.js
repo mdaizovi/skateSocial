@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ActivityIndicator, Animated,  KeyboardAvoidingView, SafeAreaView, Text, TextInput, View, Button, StyleSheet} from 'react-native';
+import { ActivityIndicator, Animated,  KeyboardAvoidingView, Text, TextInput, View, Button, StyleSheet} from 'react-native';
 import {hasValidationError, validateFields } from './SexyAppFormValidation';
 import SexyAppFormField from './SexyAppFormField';
 import SexyAppSubmitButton from './SexyAppSubmitButton';
@@ -62,15 +62,7 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
     setSubmitting(true);
     setErrorMessage('');
     setValidationErrors(getInitialState(fieldKeys));
-  
-
-
     const errors = validateFields(fields, values, validationSchema);
-    //const errors = {"email":"error 1", "password":"error 2"}
-
-    console.log("errors");
-    console.log(errors);
-
     if (hasValidationError(errors)) {
       await animationTimeout();
       setSubmitting(false);
@@ -78,11 +70,6 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
       return setValidationErrors(errors);
     }
     fadeOut();
-    
-
-
-
-    
     try {
       const [result] = await Promise.all([
         action(...getValues()),
@@ -98,7 +85,7 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
 
 return (
   <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-    <Text style={styles.error}>{errorMessage}</Text>
+    <Text style={styles.nonFieldError}>{errorMessage}</Text>
     <Animated.View
       style={[
         styles.fadingContainer,
@@ -152,14 +139,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 2,
   },  
-    error: {
+    nonFieldError: {
     marginBottom: 20,
     height: 17.5,
-    color:"red",
+    color: "red"
   },
   fadingContainer: {
     padding: 20,
-    //backgroundColor: "powderblue"
   },
   fadingText: {
     fontSize: 28

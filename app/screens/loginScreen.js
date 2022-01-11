@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Image, TouchableOpacity, Text, View } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Text, SafeAreaView, View } from "react-native";
 import * as Yup from "yup";
 
 import colors from "../config/colors";
@@ -21,10 +21,7 @@ function LoginScreen(props) {
   const [loginFailed, setLoginFailed] = useState(false);
 
   const login = async (email, password) => {
-    console.log("new login");
-    console.log(email);
-    console.log(password);
-    return result = await authApi.login(email, password);
+    return await authApi.login(email, password);
   };
 
   const handleResult = async (result) => {
@@ -67,11 +64,10 @@ function LoginScreen(props) {
         },
       },
     }}
-  
   />
 
       <TouchableOpacity>
-        <Text>Forgot Password?</Text>
+        <Text style={styles.alternativeOptionText}>Forgot Password?</Text>
       </TouchableOpacity>
 
     </Screen>
@@ -97,11 +93,15 @@ const styles = StyleSheet.create({
     paddingHorizontal:40,
     width: "100%",
     position:"absolute",
-    bottom:125,
   },  
   image: {
     marginBottom: 30,
   },
+  alternativeOptionText: {
+    position:"absolute",
+    alignSelf: "center",
+    bottom:120,
+  }
 });
 
 export default LoginScreen;

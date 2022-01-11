@@ -54,7 +54,7 @@ export default class SexyAppFormField extends React.Component {
           value={value}
           onChangeText={(text) => onChangeText(fieldName, text)}
         />
-        <Text style={styles.error}>{error}</Text>
+        <Text style={styles.fieldError}>{error}</Text>
       </Animated.View>
     );
   }
@@ -79,5 +79,5 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 4,
   },
-  error: { textAlign: 'center', height: 17.5 },
+  fieldError: { textAlign: 'center', height: 17.5, color: "red" },
 });
