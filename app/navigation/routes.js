@@ -9,4 +9,5 @@ export default Object.freeze({
   EDIT_NAME: "EditName",
   CHANGE_EMAIL: "ChangeEmail",
   CHANGE_PASSWORD: "ChangePassword",
+  FORGOT_PASSWORD: "ForgotPassword",
 });

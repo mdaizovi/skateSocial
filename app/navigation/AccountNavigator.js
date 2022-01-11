@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import MessagesScreen from "../screens/MessagesScreen";
 
-import {AccountScreen, UserDetailsEditScreen, EditNameScreen, EditUsernameScreen, ChangeEmailScreen, ChangePasswordScreen } from '../screens/accounts/';
+import {AccountScreen, UserDetailsEditScreen, EditNameScreen, EditUsernameScreen, ChangeEmailScreen, ChangePasswordScreen  } from '../screens/accounts/';
 
 const Stack = createStackNavigator();
 
@@ -27,8 +27,6 @@ const AccountNavigator = () => (
     <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} 
       options={{ title: "Change Password" }} 
     />
-
-
 
   </Stack.Navigator>
 );

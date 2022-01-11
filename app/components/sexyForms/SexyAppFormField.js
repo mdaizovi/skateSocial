@@ -37,6 +37,7 @@ export default class SexyAppFormField extends React.Component {
       // !this.props.isSubmitting &&
       this.props.error
     ) {
+      //TODO: only shake if changed.
       this.shake();
     }
   };

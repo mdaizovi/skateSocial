@@ -10,7 +10,7 @@ for (const [key, value] of Object.entries(settings)) {
     value["SearchURL"] = value["BackendUrl"] + "v1/search/";
 
     value["ResendConfirmationEmailURL"] = value["BackendUrl"] + "v1/auth/registration/resend-email/";
-
+    value["sendResetPasswordEmailURL"] = value["BackendUrl"] + "v1/auth/registration/reset-password/";
 
   }
 

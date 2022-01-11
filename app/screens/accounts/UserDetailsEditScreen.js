@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import useAuth from "../../auth/useAuth";
-import emailConfirmApi from "../../api/resendEmailConfirmation";
+import authApi from "../../api/auth";
 
 import { ListItem,ListItemChevron, ListItemSeparator } from "../../components/lists";
 import Screen from "../../components/Screen";
@@ -29,7 +29,7 @@ export default function UserDetailsEditScreen({ navigation }) {
   const [EmailConfirmaFailed, setemailConfirmaFailed] = useState(false);
 
   const resendConfirmationEmail = async () => {
-    const result = await emailConfirmApi.resendEmailConfirmation(user.email);
+    const result = await authApi.resendEmailConfirmation(user.email);
     if (!result.ok) {
       setemailConfirmaFailed(true);
       } else {

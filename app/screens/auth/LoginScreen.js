@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { StyleSheet, Image, TouchableOpacity, Text, SafeAreaView, View } from "react-native";
 import * as Yup from "yup";
 
-import colors from "../config/colors";
-import Screen from "../components/Screen";
-import authApi from "../api/auth";
-import useAuth from "../auth/useAuth";
+import routes from "../../navigation/routes";
+import Screen from "../../components/Screen";
+import authApi from "../../api/auth";
+import useAuth from "../../auth/useAuth";
 import {
   SexyAppForm
-} from "../components/sexyForms";
+} from "../../components/sexyForms";
 
 
 const validationSchema = Yup.object().shape({
@@ -27,19 +27,18 @@ function LoginScreen(props) {
   const handleResult = async (result) => {
     if (result.ok && result.data) {
       setLoginFailed(false);
-      auth.logIn(result.data);
-    // } else if (result.status === 401) {
-    //   setLoginFailed(true);
-    //   throw new Error(result.data.non_field_errors[0]);
-    } else {
+    } else if (result.data) {
       setLoginFailed(true);
       throw new Error(result.data.non_field_errors[0]);
+    } else {
+      setLoginFailed(true);
+      throw new Error("Something went wrong");
     }
   };
 
   return (
     <Screen style={styles.container} >
-      <Image style={styles.logo} source={require("../assets/logo.png")} />
+      <Image style={styles.logo} source={require("../../assets/logo.png")} />
 
     <SexyAppForm
     action={login}
@@ -66,7 +65,7 @@ function LoginScreen(props) {
     }}
   />
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => props.navigation.navigate(routes.FORGOT_PASSWORD)}>
         <Text style={styles.alternativeOptionText}>Forgot Password?</Text>
       </TouchableOpacity>
 

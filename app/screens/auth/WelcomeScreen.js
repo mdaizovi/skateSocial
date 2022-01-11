@@ -1,19 +1,18 @@
 import React from "react";
 import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
-import colors from "../config/colors";
 
-import AppButton from "../components/Button";
-import routes from "../navigation/routes";
+import AppButton from "../../components/Button";
+import routes from "../../navigation/routes";
 
 function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground
       blurRadius={10}
       style={styles.background}
-      source={require("../assets/background.jpg")}
+      source={require("../../assets/background.jpg")}
     >
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require("../assets/logo.png")} />
+        <Image style={styles.logo} source={require("../../assets/logo.png")} />
         <Text style={styles.tagline}>Skate Crew</Text>
       </View>
       
