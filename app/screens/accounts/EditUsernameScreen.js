@@ -22,7 +22,8 @@ export default function EditUsernameScreen(props) {
 
   const fieldKeys = ["username"];
   const [validationErrors, setValidationErrors] = useState(getInitialState(fieldKeys));
-
+  console.log("validationErrors 1");
+  console.log(validationErrors);
 
   const save = async (username) => {
     return await userApi.update({"username":username});
@@ -46,12 +47,7 @@ export default function EditUsernameScreen(props) {
         } else {
           console.log("else");
           const errorKeys = Object.keys(result.data);
-          console.log("errorKeys");
-          console.log(errorKeys);
-
           errorKeys.forEach((key) => {
-          
-            console.log("key: "+key)
             const error = result.data[key];
             console.log("error");
             console.log(error);
@@ -59,7 +55,7 @@ export default function EditUsernameScreen(props) {
             setValidationErrors(validationErrors);
             //setValidationErrors does nothing
             // throw new errir displaye the error but doesn't shake
-            throw new Error(error);
+            //throw new Error(error);
 
           
           

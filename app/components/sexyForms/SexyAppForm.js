@@ -13,16 +13,17 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
   const [errorMessage, setErrorMessage] = useState('');
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const [isSubmitting, setSubmitting] = useState(false);
+  const [validationErrors, setValidationErrors] = useState(getInitialState(fieldKeys));
 
-  const errorState = {};
+
   fieldKeys.forEach((key) => {
     if (key in fieldErrors) {
-      errorState[key] = fieldErrors[key];
-    } else {
-      errorState[key] = '';
-    }
+      validationErrors[key] = fieldErrors[key];
+    } 
   });
-  const [validationErrors, setValidationErrors] = useState(errorState);
+
+  console.log("validationErrors");
+  console.log(validationErrors);
 
 
 
