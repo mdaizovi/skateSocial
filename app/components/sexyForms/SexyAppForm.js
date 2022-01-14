@@ -1,31 +1,30 @@
 import React, { useState, useRef } from 'react';
 import { ActivityIndicator, Animated,  KeyboardAvoidingView, Text, TextInput, View, Button, StyleSheet} from 'react-native';
-import {hasValidationError, validateFields } from './SexyAppFormValidation';
+import {hasValidationError, validateFields, getInitialState  } from './SexyAppFormValidation';
 import SexyAppFormField from './SexyAppFormField';
 import SexyAppSubmitButton from './SexyAppSubmitButton';
-
-const getInitialState = (fieldKeys) => {
-  const state = {};
-  fieldKeys.forEach((key) => {
-    state[key] = '';
-  });
-
-  return state;
-};
 
 const animationTimeout = () =>
   new Promise((resolve) => setTimeout(resolve, 700));
   
-const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema }) => {
+const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema, fieldErrors={} }) => {
   const fieldKeys = Object.keys(fields);
   const [values, setValues] = useState(getInitialState(fieldKeys));
   const [errorMessage, setErrorMessage] = useState('');
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const [validationErrors, setValidationErrors] = useState(
-    getInitialState(fieldKeys),
-  );
+  const errorState = {};
+  fieldKeys.forEach((key) => {
+    if (key in fieldErrors) {
+      errorState[key] = fieldErrors[key];
+    } else {
+      errorState[key] = '';
+    }
+  });
+  const [validationErrors, setValidationErrors] = useState(errorState);
+
+
 
   const onChangeValue = (key, value) => {
     const newState = { ...values, [key]: value };

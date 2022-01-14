@@ -33,8 +33,11 @@ export default function EditNameScreen(props) {
       } else if (result.data) {
         setError(result.data.name);
         setSaveFailed(true);
-        // TODO forog thow to check if .non_field_errors exists.
-        throw new Error(result.data.non_field_errors[0]);
+        if ("non_field_errors" in result.data) {
+          throw new Error(result.data.non_field_errors[0]);
+        }
+        // TODO Else look for field error by key
+        
       } else {
         setSaveFailed(true);
         throw new Error("Something went wrong");
@@ -85,10 +88,4 @@ const styles = StyleSheet.create({
     top: 20,
     width: "100%",
   },
-  buttonsContainer: {
-    paddingHorizontal:40,
-    width: "100%",
-    position:"absolute",
-    bottom:125,
-  },  
 });

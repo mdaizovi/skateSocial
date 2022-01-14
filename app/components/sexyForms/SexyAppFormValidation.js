@@ -1,3 +1,11 @@
+export const getInitialState = (fieldKeys) => {
+  const state = {};
+  fieldKeys.forEach((key) => {
+    state[key] = '';
+  });
+  return state;
+};
+
 export const validateContent = (text) => {
   if (!text) {
     return "Can't be blank";

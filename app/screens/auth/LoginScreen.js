@@ -30,7 +30,10 @@ function LoginScreen(props) {
       auth.logIn(result.data);
     } else if (result.data) {
       setLoginFailed(true);
-      throw new Error(result.data.non_field_errors[0]);
+      if ("non_field_errors" in result.data) {
+        throw new Error(result.data.non_field_errors[0]);
+      }
+      // TODO Else look for field error by key
     } else {
       setLoginFailed(true);
       throw new Error("Something went wrong");
