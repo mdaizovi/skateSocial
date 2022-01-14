@@ -3,6 +3,17 @@ import {Animated, Text, TextInput, View, StyleSheet } from 'react-native';
 
 
 export default class SexyAppFormField extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  //   console.log(props);
+  //   if (
+  //     this.props.error
+  //   ) {
+  //     this.shake();
+  //   }
+  // }
+
+
   position = new Animated.Value(0);
 
   shiftPosition(distance) {
@@ -55,7 +66,7 @@ export default class SexyAppFormField extends React.Component {
           value={value}
           onChangeText={(text) => onChangeText(fieldName, text)}
         />
-        <Text style={styles.fieldError}>{error}</Text>
+        <Text style={styles.fieldError}>{error||field.error}</Text>
       </Animated.View>
     );
   }

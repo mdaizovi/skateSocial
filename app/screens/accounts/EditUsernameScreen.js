@@ -22,8 +22,6 @@ export default function EditUsernameScreen(props) {
 
   const fieldKeys = ["username"];
   const [validationErrors, setValidationErrors] = useState(getInitialState(fieldKeys));
-  console.log("validationErrors 1");
-  console.log(validationErrors);
 
   const save = async (username) => {
     return await userApi.update({"username":username});
@@ -32,40 +30,21 @@ export default function EditUsernameScreen(props) {
   const handleResult = async (result) => {
     setSaveAttempted(true);
     if (result) {
-      console.log(result.data);
       if (result.ok && result.data) {
         setSaveFailed(false);
         auth.updateUser(result.data);
       } else if (result.data) {
-        
-        console.log("result was not okay");
         setSaveFailed(true);
-        
         if ("non_field_errors" in result.data) {
-          console.log("non_field_errors in result.data");
           throw new Error(result.data.non_field_errors[0]);
         } else {
-          console.log("else");
           const errorKeys = Object.keys(result.data);
           errorKeys.forEach((key) => {
             const error = result.data[key];
-            console.log("error");
-            console.log(error);
-            validationErrors[key] = error
-            setValidationErrors(validationErrors);
-            //setValidationErrors does nothing
-            // throw new errir displaye the error but doesn't shake
-            //throw new Error(error);
-
-          
-          
+            const newErrors = { ...validationErrors, [key]: error };
+            setValidationErrors(newErrors);
           });
-          console.log("validationErrors");
-          console.log(validationErrors);
         }
-
-      
-      
       
       } else {
         setSaveFailed(true);
@@ -90,9 +69,9 @@ export default function EditUsernameScreen(props) {
             afterSubmit={handleResult}
             buttonText="Save"
             validationSchema = {validationSchema}
-            fieldErrors = {validationErrors}
             fields={{
               username: {
+                error: validationErrors["username"],
                 label: 'Username',
                 inputProps: {
                   keyboardType: 'name-phone-pad',

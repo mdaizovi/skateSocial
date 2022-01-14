@@ -7,7 +7,7 @@ import SexyAppSubmitButton from './SexyAppSubmitButton';
 const animationTimeout = () =>
   new Promise((resolve) => setTimeout(resolve, 700));
   
-const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema, fieldErrors={} }) => {
+const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema }) => {
   const fieldKeys = Object.keys(fields);
   const [values, setValues] = useState(getInitialState(fieldKeys));
   const [errorMessage, setErrorMessage] = useState('');
@@ -15,22 +15,9 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
   const [isSubmitting, setSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState(getInitialState(fieldKeys));
 
-
-  fieldKeys.forEach((key) => {
-    if (key in fieldErrors) {
-      validationErrors[key] = fieldErrors[key];
-    } 
-  });
-
-  console.log("validationErrors");
-  console.log(validationErrors);
-
-
-
   const onChangeValue = (key, value) => {
     const newState = { ...values, [key]: value };
     setValues(newState);
-  
     if (validationErrors[key]) {
       const newErrors = { ...validationErrors, [key]: '' };
       setValidationErrors(newErrors);

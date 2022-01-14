@@ -31,9 +31,8 @@ export const validateField = (validators, value) => {
 
 export const validateFields = (fields, values, validationSchema) => {
   const errors = {};
-  const fieldKeys = Object.keys(fields);
+  //const fieldKeys = Object.keys(fields);
   data = fieldValues(fields, values);
-
   try {
     validationSchema.validateSync(data, { abortEarly: false });
     return {}
@@ -47,7 +46,6 @@ export const validateFields = (fields, values, validationSchema) => {
     }
     
   }
-
   return errors;
 };
 
