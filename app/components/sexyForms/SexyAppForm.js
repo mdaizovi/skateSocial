@@ -19,7 +19,7 @@ const animationTimeout = () =>
     return initialValues;
   };
 
-const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema }) => {
+const SexyAppForm = ({ fields, buttonText, action, afterSubmit=null, validationSchema }) => {
   const fieldKeys = Object.keys(fields);
   // const [values, setValues] = useState(getInitialState(fieldKeys));
   const [errorMessage, setErrorMessage] = useState('');
@@ -102,7 +102,10 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
         throw new Error("Something went wrong");
       }
 
-      await afterSubmit(result);
+      if (afterSubmit) {
+        await afterSubmit(result);
+      }
+
     } catch (e) {
       setErrorMessage(e.message);
     }
