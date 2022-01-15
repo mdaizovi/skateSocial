@@ -25,8 +25,6 @@ export default function EditNameScreen(props) {
   const handleResult = async (result) => {
     if (result) {
       if (result.ok && result.data) {
-        console.log("result ok");
-        console.log(result.data);
         auth.updateUser(result.data);
       } 
     } 

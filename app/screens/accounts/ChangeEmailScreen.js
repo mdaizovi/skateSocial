@@ -1,69 +1,64 @@
 import React, { useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, Image, TouchableOpacity, Text, View } from "react-native";
+import * as Yup from "yup";
 
 import Screen from "../../components/Screen";
 import {
-  ListItem,
-  ListItemDeleteAction,
-  ListItemSeparator,
-} from "../../components/lists";
+  SexyAppForm
+} from "../../components/sexyForms";
+import useAuth from "../../auth/useAuth";
+import authApi from "../../api/auth";
 
-const initialMessages = [
-  {
-    id: 1,
-    title: "Mosh Hamedani",
-    description: "Hey! Is this item still available?",
-    image: require("../../assets/mosh.jpg"),
-  },
-  {
-    id: 2,
-    title: "Mosh Hamedani",
-    description:
-      "I'm interested in this item. When will you be able to post it?",
-    image: require("../../assets/mosh.jpg"),
-  },
-];
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Email"),
+});
+
 
 export default function ChangeEmailScreen(props) {
-  const [messages, setMessages] = useState(initialMessages);
-  const [refreshing, setRefreshing] = useState(false);
-
-  const handleDelete = (message) => {
-    // Delete the message from messages
-    setMessages(messages.filter((m) => m.id !== message.id));
+  const auth = useAuth();
+  
+  const save = async (email) => {
+    return await authApi.changeEmail(email);
   };
 
+  const handleResult = async (result) => {
+    if (result) {
+      if (result.ok && result.data) {
+        auth.updateUser(result.data);
+      } 
+    } 
+  };
+
+
   return (
-    <Screen>
-      <FlatList
-        data={messages}
-        keyExtractor={(message) => message.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.title}
-            subTitle={item.description}
-            image={item.image}
-            onPress={() => console.log("Message selected", item)}
-            renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
-            )}
-          />
-        )}
-        ItemSeparatorComponent={ListItemSeparator}
-        refreshing={refreshing}
-        onRefresh={() => {
-          setMessages([
-            {
-              id: 2,
-              title: "T2",
-              description: "D2",
-              image: require("../../assets/mosh.jpg"),
+    <Screen style={styles.container} >
+      <SexyAppForm
+        action={save}
+        afterSubmit={handleResult}
+        buttonText="Save"
+        validationSchema = {validationSchema}
+        fields={{
+          email: {
+            label: 'Email',
+            value: auth.user.email,
+            inputProps: {
+              keyboardType: 'email-address',
+              autoCapitalize: 'none',
+              autoCorrect: false,
             },
-          ]);
+          },
         }}
       />
     </Screen>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    top: 20,
+    width: "100%",
+  },
+});

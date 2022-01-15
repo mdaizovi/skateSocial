@@ -7,14 +7,12 @@ for (const [key, value] of Object.entries(settings)) {
     value["RegisterURL"] = value["BackendUrl"] + "v1/auth/registration/";
     value["UserUpdateURL"] = value["BackendUrl"] + "v1/auth/user/";
 
-    value["SearchURL"] = value["BackendUrl"] + "v1/search/";
-
     value["sendResetPasswordEmailURL"] = value["BackendUrl"] + "v1/auth/registration/password/reset/";
-    
     value["changePasswordURL"] = value["BackendUrl"] + "v1/auth/password/change/";
+    value["changeEmailURL"] = value["BackendUrl"] + "v1/auth/email/change/";
+    value["ResendConfirmationEmailURL"] = value["BackendUrl"] + "v1/auth/registration/email/confirmation-resend/";
 
-    // Am I stupid? does resend-email exist or do i need to custom make it?
-    value["ResendConfirmationEmailURL"] = value["BackendUrl"] + "v1/auth/registration/resend-email/";
+    value["SearchURL"] = value["BackendUrl"] + "v1/search/";
 
   }
 
