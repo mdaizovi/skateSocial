@@ -64,9 +64,6 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
         action(...getValues()),
         animationTimeout(),
       ]);
-
-
-
       setActionAttempted(true);
       if (result) {
         if (result.ok && result.data) {
@@ -83,7 +80,6 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
               setValidationErrors(newErrors);
             });
           }
-        
         } else {
           setActionFailed(true);
           throw new Error("Something went wrong");
@@ -92,11 +88,6 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
         setActionFailed(true);
         throw new Error("Something went wrong");
       }
-
-
-
-
-
 
       await afterSubmit(result);
     } catch (e) {
@@ -110,50 +101,45 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
 return (
   <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
     <Text style={styles.nonFieldError}>{errorMessage}</Text>
-    <Animated.View
-      style={[
-        styles.fadingContainer,
-        {
-          // Bind opacity to animated value
-          opacity: fadeAnim
-        }
-      ]}
-    >
 
-  {actionAttempted && !actionFailed ? (
+    {actionAttempted && !actionFailed ? (
 				<Text>Saved!!!</Text>
 			) : (
-				<>
-      {isSubmitting && (
-        <View style={styles.activityIndicatorContainer}>
-          <ActivityIndicator size="large" color="#3F5EFB" />
-        </View>
-      )}
+			<>
 
-        {fieldKeys.map((key) => {
-          return (
-            <SexyAppFormField
-              key={key}
-              fieldName={key}
-              field={fields[key]}
-              error={validationErrors[key]}
-              onChangeText={onChangeValue}
-              value={values[key]}
-            />
-          );
-          })
-        }
+        <Animated.View
+            style={[
+              styles.fadingContainer,
+              {
+                // Bind opacity to animated value
+                opacity: fadeAnim
+              }
+            ]}
+        >
+          {isSubmitting && (
+            <View style={styles.activityIndicatorContainer}>
+              <ActivityIndicator size="large" color="#3F5EFB" />
+            </View>
+          )}
 
-			  </>
-			)}
+            {fieldKeys.map((key) => {
+              return (
+                <SexyAppFormField
+                  key={key}
+                  fieldName={key}
+                  field={fields[key]}
+                  error={validationErrors[key]}
+                  onChangeText={onChangeValue}
+                  value={values[key]}
+                />
+              );
+              })
+            }
 
-
-
-
-
-
-    </Animated.View>
-    <SexyAppSubmitButton title={buttonText} onPress={submit} isSubmitting={isSubmitting} />
+        </Animated.View>
+        <SexyAppSubmitButton title={buttonText} onPress={submit} isSubmitting={isSubmitting} />
+			</>
+		)}
   </KeyboardAvoidingView>
 );
 }
