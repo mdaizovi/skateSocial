@@ -105,14 +105,15 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit=null, validationS
       if (afterSubmit) {
         await afterSubmit(result);
       }
-
+      setSubmitting(false);
+      fadeIn();
+      return result;
     } catch (e) {
       setErrorMessage(e.message);
     }
     fadeIn();
     // TODO: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     setSubmitting(false);
-    return result;
   };
 
 return (
