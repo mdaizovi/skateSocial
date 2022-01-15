@@ -14,6 +14,8 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const [isSubmitting, setSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState(getInitialState(fieldKeys));
+  const [actionAttempted, setActionAttempted] = useState(false);
+  const [actionFailed, setActionFailed] = useState(false);
 
   const onChangeValue = (key, value) => {
     const newState = { ...values, [key]: value };
@@ -62,6 +64,40 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
         action(...getValues()),
         animationTimeout(),
       ]);
+
+
+
+      setActionAttempted(true);
+      if (result) {
+        if (result.ok && result.data) {
+          setActionFailed(false);
+        } else if (result.data) {
+          setActionFailed(true);
+          if ("non_field_errors" in result.data) {
+            throw new Error(result.data.non_field_errors[0]);
+          } else {
+            const errorKeys = Object.keys(result.data);
+            errorKeys.forEach((key) => {
+              const error = result.data[key];
+              const newErrors = { ...validationErrors, [key]: error };
+              setValidationErrors(newErrors);
+            });
+          }
+        
+        } else {
+          setActionFailed(true);
+          throw new Error("Something went wrong");
+        }
+      } else {
+        setActionFailed(true);
+        throw new Error("Something went wrong");
+      }
+
+
+
+
+
+
       await afterSubmit(result);
     } catch (e) {
       setErrorMessage(e.message);
@@ -83,13 +119,18 @@ return (
         }
       ]}
     >
+
+  {actionAttempted && !actionFailed ? (
+				<Text>Saved!!!</Text>
+			) : (
+				<>
       {isSubmitting && (
         <View style={styles.activityIndicatorContainer}>
           <ActivityIndicator size="large" color="#3F5EFB" />
         </View>
       )}
 
-              {fieldKeys.map((key) => {
+        {fieldKeys.map((key) => {
           return (
             <SexyAppFormField
               key={key}
@@ -100,7 +141,17 @@ return (
               value={values[key]}
             />
           );
-        })}
+          })
+        }
+
+			  </>
+			)}
+
+
+
+
+
+
     </Animated.View>
     <SexyAppSubmitButton title={buttonText} onPress={submit} isSubmitting={isSubmitting} />
   </KeyboardAvoidingView>

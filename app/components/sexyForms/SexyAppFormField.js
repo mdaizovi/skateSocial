@@ -3,17 +3,6 @@ import {Animated, Text, TextInput, View, StyleSheet } from 'react-native';
 
 
 export default class SexyAppFormField extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   console.log(props);
-  //   if (
-  //     this.props.error
-  //   ) {
-  //     this.shake();
-  //   }
-  // }
-
-
   position = new Animated.Value(0);
 
   shiftPosition(distance) {
@@ -48,7 +37,6 @@ export default class SexyAppFormField extends React.Component {
       // !this.props.isSubmitting &&
       this.props.error
     ) {
-      //TODO: only shake if changed.
       this.shake();
     }
   };
