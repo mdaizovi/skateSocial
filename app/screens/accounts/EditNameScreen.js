@@ -17,65 +17,41 @@ const validationSchema = Yup.object().shape({
 
 export default function EditNameScreen(props) {
   const auth = useAuth();
-  const [saveAttempted, setSaveAttempted] = useState(false);
-  const [saveFailed, setSaveFailed] = useState(false);
-
+  
   const save = async (name) => {
     return await userApi.update({"name":name});
   };
 
   const handleResult = async (result) => {
-    setSaveAttempted(true);
     if (result) {
       if (result.ok && result.data) {
-        setSaveFailed(false);
+        console.log("result ok");
+        console.log(result.data);
         auth.updateUser(result.data);
-      } else if (result.data) {
-        setError(result.data.name);
-        setSaveFailed(true);
-        if ("non_field_errors" in result.data) {
-          throw new Error(result.data.non_field_errors[0]);
-        }
-        // TODO Else look for field error by key
-        
-      } else {
-        setSaveFailed(true);
-        throw new Error("Something went wrong");
-      }
-    } else {
-      setSaveFailed(true);
-      throw new Error("Something went wrong");
-    }
+      } 
+    } 
   };
 
 
   return (
     <Screen style={styles.container} >
-
-    {saveAttempted && !saveFailed ? (
-				<Text>Saved!!!</Text>
-			) : (
-				<>
-          <SexyAppForm
-            action={save}
-            afterSubmit={handleResult}
-            buttonText="Save"
-            validationSchema = {validationSchema}
-            fields={{
-              name: {
-                label: 'Name',
-                inputProps: {
-                  keyboardType: 'name-phone-pad',
-                  //autoCapitalize: 'none',
-                  autoCorrect: false,
-                },
-              },
-            }}
-        />
-
-			  </>
-			)}
-
+      <SexyAppForm
+        action={save}
+        afterSubmit={handleResult}
+        buttonText="Save"
+        validationSchema = {validationSchema}
+        fields={{
+          name: {
+            label: 'Name',
+            value: auth.user.name,
+            inputProps: {
+              keyboardType: 'name-phone-pad',
+              //autoCapitalize: 'none',
+              autoCorrect: false,
+            },
+          },
+        }}
+      />
     </Screen>
   );
 }

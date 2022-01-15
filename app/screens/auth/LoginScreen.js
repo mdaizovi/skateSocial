@@ -18,7 +18,6 @@ const validationSchema = Yup.object().shape({
 
 function LoginScreen(props) {
   const auth = useAuth();
-  const [loginFailed, setLoginFailed] = useState(false);
 
   const login = async (email, password) => {
     return await authApi.login(email, password);
@@ -26,17 +25,7 @@ function LoginScreen(props) {
 
   const handleResult = async (result) => {
     if (result.ok && result.data) {
-      setLoginFailed(false);
       auth.logIn(result.data);
-    } else if (result.data) {
-      setLoginFailed(true);
-      if ("non_field_errors" in result.data) {
-        throw new Error(result.data.non_field_errors[0]);
-      }
-      // TODO Else look for field error by key
-    } else {
-      setLoginFailed(true);
-      throw new Error("Something went wrong");
     }
   };
 

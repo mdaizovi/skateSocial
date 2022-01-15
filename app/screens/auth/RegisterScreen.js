@@ -12,15 +12,13 @@ import {
 import ActivityIndicator from "../../components/ActivityIndicator";
 
 const validationSchema = Yup.object().shape({
-  //TODO can I do validation here to make passwords match?
   email: Yup.string().required().email().label("Email"),
   password1: Yup.string().required().min(8).label("Password"),
-  password2: Yup.string().required().min(8).label("Password (again)"),
+  password2: Yup.string().required().min(8).label("Password (again)").oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
 function RegisterScreen(props) {
   const auth = useAuth();
-  const [requestFailed, setRequestFailed] = useState(false);
 
   //const register = async (email, password) => {
   const register = async ({userInfo}) => {
@@ -31,22 +29,8 @@ function RegisterScreen(props) {
   const handleResult = async (result) => {
     if (result) {
       if (result.ok && result.data) {
-        setRequestFailed(false);
         auth.logIn(result.data);
-      } else if (result.data) {
-        setRequestFailed(true);
-        if ("non_field_errors" in result.data) {
-          throw new Error(result.data.non_field_errors[0]);
-        }
-        // TODO Else look for field error by key
-
-      } else {
-        setRequestFailed(true);
-        throw new Error("Something went wrong");
       }
-    } else {
-      setRequestFailed(true);
-      throw new Error("Something went wrong");
     }
   };
 

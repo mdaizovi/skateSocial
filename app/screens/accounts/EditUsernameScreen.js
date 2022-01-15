@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import React from "react";
+import { StyleSheet} from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../../components/Screen";
 import {
   SexyAppForm
 } from "../../components/sexyForms";
-import {getInitialState} from '../../components/sexyForms/SexyAppFormValidation';
 import useAuth from "../../auth/useAuth";
 import userApi from "../../api/user";
 
@@ -17,9 +16,6 @@ const validationSchema = Yup.object().shape({
 
 export default function EditUsernameScreen(props) {
   const auth = useAuth();
-
-  const fieldKeys = ["username"];
-  const [validationErrors, setValidationErrors] = useState(getInitialState(fieldKeys));
 
   const save = async (username) => {
     return await userApi.update({"username":username});
@@ -43,8 +39,8 @@ export default function EditUsernameScreen(props) {
         validationSchema = {validationSchema}
         fields={{
           username: {
-            error: validationErrors["username"],
             label: 'Username',
+            value: auth.user.username,
             inputProps: {
               keyboardType: 'name-phone-pad',
               autoCapitalize: 'none',

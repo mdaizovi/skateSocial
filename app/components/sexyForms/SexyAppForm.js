@@ -1,21 +1,34 @@
 import React, { useState, useRef } from 'react';
-import { ActivityIndicator, Animated,  KeyboardAvoidingView, Text, TextInput, View, Button, StyleSheet} from 'react-native';
+import { ActivityIndicator, Animated,  KeyboardAvoidingView, Text, View, StyleSheet} from 'react-native';
 import {hasValidationError, validateFields, getInitialState  } from './SexyAppFormValidation';
 import SexyAppFormField from './SexyAppFormField';
 import SexyAppSubmitButton from './SexyAppSubmitButton';
 
 const animationTimeout = () =>
   new Promise((resolve) => setTimeout(resolve, 700));
-  
+
+  const getInitialValues = (fields) => {
+    const initialValues = {};
+    for (const [key, field] of Object.entries(fields)) {
+      if ("value" in field) {
+        initialValues[key] = field["value"];
+      } else {
+        initialValues[key] = "";
+      };
+    };
+    return initialValues;
+  };
+
 const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema }) => {
   const fieldKeys = Object.keys(fields);
-  const [values, setValues] = useState(getInitialState(fieldKeys));
+  // const [values, setValues] = useState(getInitialState(fieldKeys));
   const [errorMessage, setErrorMessage] = useState('');
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const [isSubmitting, setSubmitting] = useState(false);
   const [validationErrors, setValidationErrors] = useState(getInitialState(fieldKeys));
   const [actionAttempted, setActionAttempted] = useState(false);
   const [actionFailed, setActionFailed] = useState(false);
+  const [values, setValues] = useState(getInitialValues(fields));
 
   const onChangeValue = (key, value) => {
     const newState = { ...values, [key]: value };
@@ -43,9 +56,9 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
       ).start();
     };
 
-    function delay(time) {
-      return new Promise(resolve => setTimeout(resolve, time));
-    }
+    // function delay(time) {
+    //   return new Promise(resolve => setTimeout(resolve, time));
+    // }
 
   const submit = async () => {
     setSubmitting(true);
@@ -96,6 +109,7 @@ const SexyAppForm = ({ fields, buttonText, action, afterSubmit, validationSchema
     fadeIn();
     // TODO: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
     setSubmitting(false);
+    return result;
   };
 
 return (

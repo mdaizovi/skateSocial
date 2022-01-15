@@ -25,7 +25,7 @@ export default useAuth = () => {
   };
 
   const updateUser = (data) => {
-    const user = data
+    const user = data;
     authStorage.storeUser(user);
     setUser(user);
   };
