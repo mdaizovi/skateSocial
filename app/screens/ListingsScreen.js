@@ -5,6 +5,7 @@ import Card from "../components/Card";
 import colors from "../config/colors";
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
+import TopBar from '../components/bars/TopBarNews';
 
 const listings = [
   {
@@ -24,6 +25,7 @@ const listings = [
 function ListingsScreen({ navigation }) {
   return (
     <Screen style={styles.screen}>
+      <TopBar></TopBar>
       <Text>
       Aggregate skate events, friend's trick videos. Can sort up at top, and skate events are separated by day.
       </Text>
