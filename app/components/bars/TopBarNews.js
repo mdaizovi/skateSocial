@@ -8,21 +8,21 @@ export default class TopBar extends React.Component {
       <View style={styles.container}>
         <TouchableOpacity style={styles.leftButton}>
           <Text style={styles.buttonText}>
-            <MaterialCommunityIcons name="filter" size="40"/>
+            <MaterialCommunityIcons name="filter" size={40}/>
           </Text>
         </TouchableOpacity>
 
 
         <TouchableOpacity style={styles.middleButton}>
           <Text style={styles.buttonText}>
-            <MaterialCommunityIcons name="calendar-plus" size="40"/>
+            <MaterialCommunityIcons name="calendar-plus" size={40}/>
           </Text>
         </TouchableOpacity>
 
 
         <TouchableOpacity style={styles.rightButton}>
           <Text style={styles.buttonText}>
-          <MaterialCommunityIcons name="bell-circle" size="40"/>
+          <MaterialCommunityIcons name="bell-circle" size={40}/>
           </Text>
         </TouchableOpacity>
 
